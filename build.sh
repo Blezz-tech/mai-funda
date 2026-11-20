@@ -8,7 +8,7 @@ if command -v typst >/dev/null 2>&1; then
   for d in kr1 kr2 lr1 lr2; do
     [ -d "$d" ] || continue
     echo "== $d"
-    ( cd "$d" && typst compile --root .. --font-path ../fonts main.typ out.pdf )
+    ( cd "$d" && typst compile --root .. main.typ out.pdf )
   done
 elif python3 -c "import typst" >/dev/null 2>&1; then
   # запасной вариант: PyPI-пакет `typst` (pip install --user typst)
@@ -19,7 +19,7 @@ for d in ["kr1", "kr2", "lr1", "lr2"]:
     if not os.path.isdir(d):
         continue
     print(f"== {d}")
-    pdf = typst.compile(f"{d}/main.typ", root=".", font_paths=["fonts"])
+    pdf = typst.compile(f"{d}/main.typ", root=".")
     with open(f"{d}/out.pdf", "wb") as f:
         f.write(pdf)
 PY

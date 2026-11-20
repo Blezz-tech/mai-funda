@@ -1,0 +1,303 @@
+// ============================================================
+//  Оформление отчёта (курсовая работа, МАИ, каф. 806)
+//  Порт вёрстки из ODT-файла. Всё «оформление» — здесь.
+// ============================================================
+
+#let doc-meta = (
+  university: "Московский авиационный институт",
+  university-sub: "(Национальный исследовательский университет)",
+  faculty: "Факультет компьютерных наук и прикладной математики",
+  doc-type: "Курсовая работа",
+  course-line: "по курсу",
+  course: "«Фундаментальная информатика»",
+  semester: "I семестр",
+  task: "Задание 1.",
+  student: "Студент Маркусь Евгений Олегович",
+  group: "группы М8О-113БВ-25",
+  list-no: "№ по списку 17",
+  contacts: "Контакты: markus.jenya04@yandex.ru",
+  work-done: "Работа выполнена: «6» октября 2025г.",
+  teacher: "Преподаватель: каф. 806 Никулин Сергей Петрович",
+  handed: "Отчет сдан «06» октября 2025г.",
+  grade: "Итоговая оценка: _____",
+  sign: "Подпись преподавателя: __________",
+)
+
+// ------------------------------------------------------------
+//  Глобальные настройки страницы и текста
+// ------------------------------------------------------------
+#let setup(
+  doc,
+  body-font: "Tinos",        // замена Times New Roman (метрический аналог)
+  mono-font: "Cousine",      // замена Liberation Mono
+  body-size: 12pt,
+  margins: (top: 1.25cm, bottom: 1.25cm, left: 3cm, right: 1.5cm),
+  numbering: true,
+) = {
+  set page(
+    paper: "a4",
+    margin: margins,
+    numbering: if numbering { "1" } else { none },
+  )
+  set text(font: (body-font,), size: body-size, lang: "ru", hyphenate: true)
+  set par(justify: true, leading: 0.55em, spacing: 0.55em, first-line-indent: 0pt)
+  set list(indent: 1.2em, spacing: 0.25em, marker: [–])
+  set enum(indent: 1.2em, spacing: 0.25em)
+  set heading(numbering: none)
+  show heading: it => block(above: 1.1em, below: 0.5em, it)
+  set figure(kind: image, gap: 0.3em)
+  set figure.caption(separator: none)
+  show figure.caption: it => block(
+    above: 0.4em,
+    below: 1.1em,
+    text(size: 11pt, it.body),
+  )
+  set table(stroke: 0.5pt)
+  show table.cell: it => {
+    set text(size: 8pt)
+    set par(justify: false, leading: 0.55em)
+    align(center + horizon, it)
+  }
+  // моноширинные листинги: без рамки, плотный интерлиньяж
+  show raw.where(block: true): it => {
+    set text(font: (mono-font,), size: 8pt, lang: "en", hyphenate: false)
+    set par(justify: false, leading: 0.34em, spacing: 0.34em)
+    // длинные строки терминала/листинга переносим по правому краю текста
+    block(width: 100%, inset: 0pt, above: 0.6em, below: 0.6em, it)
+  }
+  show raw.where(block: false): it => text(font: (mono-font,), size: 0.92em, it)
+  doc
+}
+
+// ------------------------------------------------------------
+//  Титульный лист (по образцу ODT: всё по центру, реквизиты справа)
+// ------------------------------------------------------------
+#let title-page(m) = {
+  set page(numbering: none)
+  set par(justify: false, leading: 1.05em, spacing: 0.45em)
+  v(1.6cm)
+  align(center)[
+    #text(size: 16pt, weight: "bold")[#m.university] \
+    #text(size: 12pt, weight: "bold")[#m.university-sub]
+  ]
+  v(0.9cm)
+  align(center, text(size: 12pt, weight: "bold")[#m.faculty])
+  v(2.8cm)
+  align(center)[
+    #text(size: 28pt, weight: "bold")[#m.doc-type] \
+    #v(0.9cm)
+    #text(size: 14pt, weight: "bold")[#m.course-line] \
+    #v(0.25cm)
+    #text(size: 16pt, weight: "bold")[#m.course] \
+    #v(0.9cm)
+    #text(size: 14pt, weight: "bold")[#m.semester] \
+    #text(size: 14pt, weight: "bold")[#m.task]
+  ]
+  v(1fr)
+  align(right)[
+    #m.student \
+    #m.group \
+    #m.list-no \
+    #m.contacts \
+    #m.work-done \
+    #m.teacher
+  ]
+  v(1.2em)
+  align(right)[
+    #m.handed \
+    #m.grade \
+    #m.sign
+  ]
+  pagebreak()
+  set page(numbering: "1")
+}
+
+// ------------------------------------------------------------
+//  Нумерованный пункт отчёта: «1. Тема: …»
+// ------------------------------------------------------------
+#let item(num, head, body) = block(
+  above: 0.85em,
+  below: 0.15em,
+  [#text(weight: "bold")[#num]#h(0.45em)#text(weight: "bold")[#head]#h(0.45em)#body],
+)
+
+#let item-plain(num, head) = item(num, head, none)
+
+// ------------------------------------------------------------
+//  Листинг из файла (моноширинный, без рамки)
+// ------------------------------------------------------------
+// путь задаётся от корня проекта (например "/lr1/src/main.c")
+#let listing(path) = {
+  let text-content = read(if path.starts-with("/") { path } else { "/" + path })
+  block(width: 100%, raw(text-content, block: true, lang: "text"))
+}
+
+// ------------------------------------------------------------
+//  Строка терминала: приглашение + команда
+// ------------------------------------------------------------
+// приглашение терминала: передаётся полная строка с командой
+#let prompt-line(cmd, size: 8.5pt) = block(
+  above: 0.5em,
+  below: 0.3em,
+  text(font: ("Cousine",), size: size, lang: "en", cmd),
+)
+
+// ------------------------------------------------------------
+//  Картинка с подписью (сопрограмма / тест)
+// ------------------------------------------------------------
+#let shot(path, width: 100%, caption: none) = figure(
+  image(if path.starts-with("/") { path } else { "/" + path }, width: width),
+  caption: caption,
+)
+
+// ------------------------------------------------------------
+//  Строка теста:  №1  λ0(λ) -> λ0λ1(λ)
+// ------------------------------------------------------------
+#let test-row(n, input, output) = block(
+  above: 0.15em,
+  below: 0.15em,
+  grid(
+    columns: (2.4em, 1fr),
+    text(weight: "bold")[№#n],
+    [#input #h(0.5em) $arrow.r$ #h(0.5em) #output],
+  ),
+)
+
+// ============================================================
+//  Вариант оформления для ЛАБОРАТОРНЫХ работ (ЛР 1, ЛР 2).
+//  Отличается от курсовой только «шапкой»: заголовок по центру,
+//  реквизиты — блоком с отступом слева (как в ODT).
+// ============================================================
+
+#let lab-meta = (
+  title: "Отчёт по лабораторной работе №1 по курсу «Фундаментальная информатика».",
+  student: "Выполнил студент группы М8О-113БВ-25: Маркусь Евгений Олегович № по списку 17.",
+  extras: (
+    "Контакты: mrkus.jenya04@yandex.ru",
+    "Работа выполнена: «16» сентября 2025 г.",
+    "Преподаватель: каф. 806 Никулин Сергей Петрович",
+    "Входной контроль знаний с оценкой: _____",
+    "Отчет сдан «30» сентября 2025 г.",
+    "Итоговая оценка: _____",
+    "Подпись преподавателя: __________",
+  ),
+)
+
+// шапка ЛР: всё на первой странице, реквизиты с отступом
+#let lab-head(m) = {
+  set par(justify: false, leading: 1.0em, spacing: 0.35em)
+  align(center, text(size: 12pt, weight: "bold", m.title))
+  v(0.35em)
+  block(inset: (left: 3.5em), text(size: 11pt, [
+    #m.student
+  ]))
+  v(0.35em)
+  block(inset: (left: 3.5em), text(size: 11pt, m.extras.join(linebreak())))
+  v(0.7em)
+}
+
+// «Допущен к выполнению работы.  Подпись преподавателя _______»
+#let admit() = block(
+  above: 0.9em,
+  below: 0.4em,
+  grid(
+    columns: (1fr, 5cm),
+    align: horizon,
+    [Допущен к выполнению работы.],
+    align(right)[
+      #text(size: 9pt)[подпись преподавателя] \
+      #v(-0.25em)
+      #line(length: 100%, stroke: 0.4pt)
+    ],
+  ),
+)
+
+// заголовок-подпись внутри протокола: «Тест 3», «Сессия 2»
+#let sub-caption(body) = block(
+  above: 0.7em,
+  below: 0.25em,
+  text(weight: "bold", body),
+)
+
+// подпись перед блоком вывода: «Входные данные:» / «Выходные данные:»
+#let io-label(body) = block(above: 0.35em, below: 0.1em, text(size: 11pt, body))
+
+// ---------- общие блоки для всех отчётов ----------
+
+// список «оборудование / ПО» с отступом (в ODT это были табы)
+#let indented-list(items) = block(
+  inset: (left: 1.5em),
+  items.map(it => [– #it]).join(linebreak()),
+)
+
+// дневник отладки: 7 колонок, как в исходных ODT
+#let diary(rows) = align(center)[
+  #table(
+    columns: (0.8cm, 1.7cm, 2.2cm, 1.8cm, 3.1cm, 4.5cm, 2.9cm),
+    align: center + horizon,
+    stroke: 0.5pt,
+    table.header(
+      [№], [Лаб. или дом.], [Дата], [Время], [Событие],
+      [Действие по исправлению], [Примечание],
+    ),
+    ..rows.map(r => r.map(c => [#c])).flatten(),
+  )
+]
+
+// «Подпись студента ____» справа
+#let signature() = block(
+  above: 2.5em,
+  width: 100%,
+  align(right)[
+    #text(size: 11pt)[Подпись студента]
+    #box(width: 4.5cm, line(length: 100%, stroke: 0.5pt))
+  ],
+)
+
+// вывод работы (п. 11)
+#let conclusion(body) = block(above: 0.3em, body)
+
+// ------------------------------------------------------------
+//  Протокол работы: текстовый файл, построчно моноширинным,
+//  маркеры ⟦IMG:n⟧ заменяются рисунками с подписями.
+// ------------------------------------------------------------
+#let protocol(path, images: (:), width: 78%) = block(width: 100%, {
+  let lines = read(if path.starts-with("/") { path } else { "/" + path }).split("\n")
+  for l in lines {
+    let l = l.replace("\t", "    ")
+    if l.trim() == "" {
+      v(0.28em)
+    } else if l.contains("⟦IMG:") {
+      let key = l.split("⟦IMG:").at(1).replace("⟧", "")
+      let img = images.at(key, default: none)
+      if img != none {
+        figure(
+          image(if img.at(0).starts-with("/") { img.at(0) } else { "/" + img.at(0) }, width: width),
+          caption: if img.len() > 1 { img.at(1) } else { none },
+        )
+      }
+    } else {
+      text(font: ("Cousine",), size: 7.3pt, lang: "en", l)
+      linebreak()
+    }
+  }
+})
+
+// ------------------------------------------------------------
+//  Описание одного теста: заголовок, вход, выход
+// ------------------------------------------------------------
+#let test-case(title, input, output) = block(
+  above: 0.75em,
+  below: 0.3em,
+  [
+    #text(weight: "bold")[#title]
+    #v(0.15em)
+    #io-label[Входные данные:]
+    #block(inset: (left: 1.2em), text(font: ("Cousine",), size: 8.5pt, lang: "en",
+      if type(input) == array { input.join(linebreak()) } else { input }))
+    #v(0.15em)
+    #io-label[Выходные данные:]
+    #block(inset: (left: 1.2em), text(font: ("Cousine",), size: 8.5pt, lang: "en",
+      output.join(linebreak())))
+  ],
+)

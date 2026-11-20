@@ -154,8 +154,7 @@
   below: 0.15em,
   grid(
     columns: (2.4em, 1fr),
-    text(weight: "bold")[№#n],
-    [#input #h(0.5em) $arrow.r$ #h(0.5em) #output],
+    text(weight: "bold")[№#n], [#input #h(0.5em) $arrow.r$ #h(0.5em) #output],
   ),
 )
 
@@ -226,11 +225,14 @@
   let last = items.len() - 1
   block(
     inset: inset,
-    items.enumerate().map(((i, it)) => {
-      if i != last { [– #it] } else if type(it) == str {
-        if it.ends-with(".") { [– #it] } else { [– #(it + ".")] }
-      } else { [– #it.] }
-    }).join(linebreak()),
+    items
+      .enumerate()
+      .map(((i, it)) => {
+        if i != last { [– #it] } else if type(it) == str {
+          if it.ends-with(".") { [– #it] } else { [– #(it + ".")] }
+        } else { [– #it.] }
+      })
+      .join(linebreak()),
   )
 }
 
@@ -258,10 +260,7 @@
     columns: (0.8cm, 1.7cm, 2.2cm, 1.8cm, 3.1cm, 4.5cm, 2.9cm),
     align: center + horizon,
     stroke: 0.5pt,
-    table.header(
-      [№], [Лаб. или дом.], [Дата], [Время], [Событие],
-      [Действие по исправлению], [Примечание],
-    ),
+    table.header([№], [Лаб. или дом.], [Дата], [Время], [Событие], [Действие по исправлению], [Примечание]),
     ..rows.map(r => r.map(c => [#c])).flatten(),
   )
 ]
@@ -315,12 +314,12 @@
     #text(weight: "bold")[#title]
     #v(0.15em)
     #io-label[Входные данные:]
-    #block(inset: (left: 1.2em), text(font: ("Cousine",), size: 8.5pt, lang: "en",
-      if type(input) == array { input.join(linebreak()) } else { input }))
+    #block(inset: (left: 1.2em), text(font: ("Cousine",), size: 8.5pt, lang: "en", if type(input) == array {
+      input.join(linebreak())
+    } else { input }))
     #v(0.15em)
     #io-label[Выходные данные:]
-    #block(inset: (left: 1.2em), text(font: ("Cousine",), size: 8.5pt, lang: "en",
-      output.join(linebreak())))
+    #block(inset: (left: 1.2em), text(font: ("Cousine",), size: 8.5pt, lang: "en", output.join(linebreak())))
   ],
 )
 
@@ -338,15 +337,15 @@
   // реквизиты для титульного листа / шапки (по умолчанию — как в template.typ)
   meta: none,
   // содержимое пунктов
-  topic: none,              // 1. Тема
-  goal: none,               // 2. Цель работы
-  task: none,               // 3. Задание
-  idea: none,               // 6. Идея, метод, алгоритм решения задачи
-  scenario: none,           // 7. Сценарий выполнения работы
-  protocol-body: none,      // 8. Распечатка протокола
-  diary-rows: (),           // 9. Дневник отладки (строки таблицы)
-  comments: [[по существу работы: замечания отсутствуют.]],  // 10. Замечания автора
-  conclusion-body: none,    // 11. Вывод
+  topic: none, // 1. Тема
+  goal: none, // 2. Цель работы
+  task: none, // 3. Задание
+  idea: none, // 6. Идея, метод, алгоритм решения задачи
+  scenario: none, // 7. Сценарий выполнения работы
+  protocol-body: none, // 8. Распечатка протокола
+  diary-rows: (), // 9. Дневник отладки (строки таблицы)
+  comments: [[по существу работы: замечания отсутствуют.]], // 10. Замечания автора
+  conclusion-body: none, // 11. Вывод
   // необщие строки ПО, добавляются к общему списку (например, утилита nam)
   software-extra: (),
 ) = {

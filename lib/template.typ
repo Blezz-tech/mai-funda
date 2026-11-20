@@ -10,17 +10,15 @@
   doc-type: "Курсовая работа",
   course-line: "по курсу",
   course: "«Фундаментальная информатика»",
-  semester: "I семестр",
-  task: "Задание 1.",
-  student: "Студент Маркусь Евгений Олегович",
-  group: "группы М8О-113БВ-25",
-  list-no: "№ по списку 17",
-  contacts: "Контакты: markus.jenya04@yandex.ru",
-  work-done: "Работа выполнена: «6» октября 2025г.",
-  teacher: "Преподаватель: каф. 806 Никулин Сергей Петрович",
-  handed: "Отчет сдан «06» октября 2025г.",
-  grade: "Итоговая оценка: _____",
-  sign: "Подпись преподавателя: __________",
+  semester: "I",
+  task: "1",
+  student: "Маркусь Евгений Олегович",
+  group: "М8О-113БВ-25",
+  list-no: "17",
+  contacts: "markus.jenya04@yandex.ru",
+  work-done: "«6» октября 2025г.",
+  teacher: "каф. 806 Никулин Сергей Петрович",
+  handed: "«6» октября 2025г.",
 )
 
 // ------------------------------------------------------------
@@ -28,8 +26,8 @@
 // ------------------------------------------------------------
 #let setup(
   doc,
-  body-font: "Tinos",        // замена Times New Roman (метрический аналог)
-  mono-font: "Cousine",      // замена Liberation Mono
+  body-font: "Times New Roman",        // замена Times New Roman (метрический аналог)
+  mono-font: "Hack",      // замена Liberation Mono
   body-size: 12pt,
   margins: (top: 1.25cm, bottom: 1.25cm, left: 3cm, right: 1.5cm),
   numbering: true,
@@ -90,23 +88,23 @@
     #v(0.25cm)
     #text(size: 16pt, weight: "bold")[#m.course] \
     #v(0.9cm)
-    #text(size: 14pt, weight: "bold")[#m.semester] \
-    #text(size: 14pt, weight: "bold")[#m.task]
+    #text(size: 14pt, weight: "bold")[#m.semester семестр] \
+    #text(size: 14pt, weight: "bold")[Задание № #m.task]
   ]
   v(1fr)
   align(right)[
-    #m.student \
-    #m.group \
-    #m.list-no \
-    #m.contacts \
-    #m.work-done \
-    #m.teacher
+    Студент #m.student \
+    группы #m.group \
+    № по списку #m.list-no \
+    Контакты: #m.contacts \
+    Работа выполнена: #m.work-done \
+    Преподаватель: #m.teacher
   ]
   v(1.2em)
   align(right)[
-    #m.handed \
-    #m.grade \
-    #m.sign
+    Отчет сдан: #m.handed \
+    Итоговая оценка: \_\_\_\_\_ \
+    Подпись преподавателя: \_\_\_\_\_\_\_\_\_\_
   ]
   pagebreak()
   set page(numbering: "1")

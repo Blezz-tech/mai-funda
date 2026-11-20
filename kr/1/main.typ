@@ -57,49 +57,49 @@
   scenario: [
     *Краткая запись программы столбиками:*
 
-    #listing("/kr1/src/program_compact.txt")
+    #listing("/kr/1/src/program_compact.txt")
 
     *Запись программы вместе с комментариями:*
 
-    #listing("/kr1/src/program.tu")
+    #listing("/kr/1/src/program.tu")
 
     Диаграмма Тьюринга выполнена с сопрограммами.
 
     *Главная программа Main machine* (с неё начинается работа программы):
 
-    #shot("/kr1/img/diagram_main.png")
+    #shot("/kr/1/img/diagram_main.png")
 
     *Сопрограмма check_left_0* (проверка цифры 0 влево):
 
-    #shot("/kr1/img/sub_check_left_0.png", width: 72%)
+    #shot("/kr/1/img/sub_check_left_0.png", width: 72%)
 
     *Сопрограмма check_left_1* (проверка цифры 1 влево):
 
-    #shot("/kr1/img/sub_check_left_1.png", width: 72%)
+    #shot("/kr/1/img/sub_check_left_1.png", width: 72%)
 
     *Сопрограмма check_right_0* (проверка цифры 0 вправо):
 
-    #shot("/kr1/img/sub_check_right_0.png", width: 72%)
+    #shot("/kr/1/img/sub_check_right_0.png", width: 72%)
 
     *Сопрограмма check_right_1* (проверка цифры 1 вправо):
 
-    #shot("/kr1/img/sub_check_right_1.png", width: 72%)
+    #shot("/kr/1/img/sub_check_right_1.png", width: 72%)
 
     *Сопрограмма P True* (вывести результат — 1):
 
-    #shot("/kr1/img/sub_p_true.png", width: 78%)
+    #shot("/kr/1/img/sub_p_true.png", width: 78%)
 
     *Сопрограмма P False* (вывести результат — 0):
 
-    #shot("/kr1/img/sub_p_false.png", width: 78%)
+    #shot("/kr/1/img/sub_p_false.png", width: 78%)
 
     *Сопрограмма fail_check_left* (удаление цифр слева направо):
 
-    #shot("/kr1/img/sub_fail_left.png", width: 60%)
+    #shot("/kr/1/img/sub_fail_left.png", width: 60%)
 
     *Сопрограмма fail_check_right* (удаление цифр справа налево):
 
-    #shot("/kr1/img/sub_fail_right.png", width: 60%)
+    #shot("/kr/1/img/sub_fail_right.png", width: 60%)
   ],
   protocol-body: [
     *Тесты:*
@@ -112,18 +112,18 @@
 
     *Тесты в диаграммере:*
 
-    #shot("/kr1/img/test1.png", caption: [Тест № 1])
-    #shot("/kr1/img/test2.png", caption: [Тест № 2])
-    #shot("/kr1/img/test3.png", caption: [Тест № 3])
-    #shot("/kr1/img/test4.png", caption: [Тест № 4])
-    #shot("/kr1/img/test5.png", caption: [Тест № 5])
+    #shot("/kr/1/img/test1.png", caption: [Тест № 1])
+    #shot("/kr/1/img/test2.png", caption: [Тест № 2])
+    #shot("/kr/1/img/test3.png", caption: [Тест № 3])
+    #shot("/kr/1/img/test4.png", caption: [Тест № 4])
+    #shot("/kr/1/img/test5.png", caption: [Тест № 5])
 
     *Терминал:*
 
     #text(font: "Cousine", size: 8.5pt, lang: "en")[
       tu on #h(0.2em)main [?] via py v3.13.7 ❯ ./turun program.tu test.tst
     ]
-    #listing("/kr1/src/terminal.txt")
+    #listing("/kr/1/src/terminal.txt")
   ],
   diary-rows: (
     ("1", "дом.", "06.10.2025", "20:00–23:15", "Выполнение работы", "Нет", "Нет"),

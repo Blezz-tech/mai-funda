@@ -54,7 +54,7 @@
     `=` и завершаем работу алгоритма.
   ],
   scenario: [
-    #listing("/kr2/src/nam_program.txt")
+    #listing("/kr/2/src/nam_program.txt")
   ],
   protocol-body: [
     *Тесты:*
@@ -80,7 +80,7 @@
     #prompt-line("stud@OIS-4:~/Загрузки/nam (3)$ ./nam -m task_37.nam", size: 9pt)
     #prompt-line("stud@OIS-4:~/Загрузки/nam (3)$ cat nam.out", size: 9pt)
 
-    #listing("/kr2/src/nam.out.txt")
+    #listing("/kr/2/src/nam.out.txt")
   ],
   diary-rows: (
     ("1", "дом.", "07.10.2025", "22:00–23:15", "Выполнение работы", "Нет", "Нет"),

@@ -15,7 +15,7 @@
   ],
   idea: [
     #v(0.3em)
-    #listing("/lr1/src/commands.txt")
+    #listing("/lr/1/src/commands.txt")
   ],
   scenario: [
     #v(0.25em)
@@ -48,16 +48,16 @@
     #v(0.2em)
     *Сессия 1.*
 
-    #protocol("/lr1/src/session1.txt", images: (
-      "1": ("/lr1/img/plot2d.png", "Рисунок 1 — 2D-график sin(x)·cos(x) в gnuplot"),
-      "2": ("/lr1/img/plot_param.png", "Рисунок 2 — параметрический график sin(t), cos(t)"),
-      "3": ("/lr1/img/plot2d.png", "Рисунок 3 — окно gnuplot при включении parametric"),
+    #protocol("/lr/1/src/session1.txt", images: (
+      "1": ("/lr/1/img/plot2d.png", "Рисунок 1 — 2D-график sin(x)·cos(x) в gnuplot"),
+      "2": ("/lr/1/img/plot_param.png", "Рисунок 2 — параметрический график sin(t), cos(t)"),
+      "3": ("/lr/1/img/plot2d.png", "Рисунок 3 — окно gnuplot при включении parametric"),
     ), width: 78%)
 
     #v(0.6em)
     *Сессия 2.*
 
-    #protocol("/lr1/src/session2.txt", images: (), width: 78%)
+    #protocol("/lr/1/src/session2.txt", images: (), width: 78%)
   ],
   diary-rows: (
     ("1", "дом.", "16.09.2025", "20:00", "Выполнение работы", "Нет", "Нет"),

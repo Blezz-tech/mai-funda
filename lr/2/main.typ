@@ -49,11 +49,11 @@
   scenario: [
     main.c:
 
-    #listing("/lr2/src/main.c")
+    #listing("/lr/2/src/main.c")
 
     Makefile:
 
-    #listing("/lr2/src/Makefile")
+    #listing("/lr/2/src/Makefile")
 
     *Описание тестов* (проверка тестов происходит в конце протокола):
 
@@ -119,19 +119,19 @@
     #v(0.3em)
     *1. Синтаксическая ошибка*
 
-    #listing("/lr2/src/proto1.txt")
+    #listing("/lr/2/src/proto1.txt")
 
     *2. Правильная работа программы*
 
-    #listing("/lr2/src/proto2.txt")
+    #listing("/lr/2/src/proto2.txt")
 
     *3. Ошибка во время выполнения (неверный ответ, деление на ноль)*
 
-    #listing("/lr2/src/proto3.txt")
+    #listing("/lr/2/src/proto3.txt")
 
     *4. Тесты*
 
-    #listing("/lr2/src/tests.txt")
+    #listing("/lr/2/src/tests.txt")
   ],
   diary-rows: (
     ("1", "дом.", "14.10.2025", "21:20–22:15", "Выполнение работы", "Нет", "Нет"),

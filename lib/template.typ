@@ -223,18 +223,21 @@
 
 // список «оборудование / ПО» с отступом (в ODT это были табы).
 // Точка в конце автоматически добавляется к последнему пункту.
-#let indented-list(items, inset: (left: 1.5em)) = {
-  let last = items.len() - 1
+#let indented-list(items,) = {
   block(
-    inset: inset,
+    inset: (left: 1.25cm),
     items
       .enumerate()
       .map(((i, it)) => {
-        if i != last { [– #it] } else if type(it) == str {
-          if it.ends-with(".") { [– #it] } else { [– #(it + ".")] }
-        } else { [– #it.] }
+        let text = if type(it) == str { it } else { str(it) }
+
+        if i != items.len() - 1 {
+          [#text \ ]
+        } else {
+          [#text]
+        }
       })
-      .join(linebreak()),
+      .join(),
   )
 }
 

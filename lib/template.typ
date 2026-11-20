@@ -22,12 +22,33 @@
 )
 
 // ------------------------------------------------------------
+//  Цепочки гарнитур: typst подставляет первую из списка,
+//  которая есть в системе (по возрастанию приоритета сверху).
+//  Первой стоит Times New Roman — как в ODT-исходниках, дальше
+//  метрически совместимые замены (Liberation — то, чем LibreOffice
+//  подставляет Times New Roman сам), в конце — запасные.
+//  Для листингов первым идёт Hack (как в dev).
+// ------------------------------------------------------------
+#let default-body-font = (
+  "Times New Roman",
+  "Liberation Serif",
+  "Tinos",
+  "DejaVu Serif",
+)
+#let default-mono-font = (
+  "Hack",
+  "Liberation Mono",
+  "Cousine",
+  "DejaVu Sans Mono",
+)
+
+// ------------------------------------------------------------
 //  Глобальные настройки страницы и текста
 // ------------------------------------------------------------
 #let setup(
   doc,
-  body-font: "Times New Roman",
-  mono-font: "Hack",
+  body-font: default-body-font,
+  mono-font: default-mono-font,
   body-size: 12pt,
   margins: (top: 1.25cm, bottom: 1.25cm, left: 3cm, right: 1.5cm),
   numbering: true,
@@ -37,7 +58,7 @@
     margin: margins,
     numbering: if numbering { "1" } else { none },
   )
-  set text(font: (body-font,), size: 12pt, lang: "ru", hyphenate: true)
+  set text(font: body-font, size: body-size, lang: "ru", hyphenate: true)
   set par(justify: true, leading: 0.55em, spacing: 0.55em, first-line-indent: 0pt)
   set list(indent: 1.2em, spacing: 0.25em, marker: [–])
   set enum(indent: 1.2em, spacing: 0.25em)
@@ -58,12 +79,12 @@
   }
   // моноширинные листинги: без рамки, плотный интерлиньяж
   show raw.where(block: true): it => {
-    set text(font: (mono-font,), size: 8pt, lang: "en", hyphenate: false)
+    set text(font: mono-font, size: 8pt, lang: "en", hyphenate: false)
     set par(justify: false, leading: 0.34em, spacing: 0.34em)
     // длинные строки терминала/листинга переносим по правому краю текста
     block(width: 100%, inset: 0pt, above: 0.6em, below: 0.6em, it)
   }
-  show raw.where(block: false): it => text(font: (mono-font,), size: 0.92em, it)
+  show raw.where(block: false): it => text(font: mono-font, size: 0.92em, it)
   doc
 }
 
@@ -137,7 +158,7 @@
 #let prompt-line(cmd, size: 8.5pt) = block(
   above: 0.5em,
   below: 0.3em,
-  text(font: ("Cousine",), size: size, lang: "en", cmd),
+  text(font: default-mono-font, size: size, lang: "en", cmd),
 )
 
 // ------------------------------------------------------------
@@ -294,7 +315,7 @@
         )
       }
     } else {
-      text(font: ("Cousine",), size: 7.3pt, lang: "en", l)
+      text(font: default-mono-font, size: 7.3pt, lang: "en", l)
       linebreak()
     }
   }
@@ -310,12 +331,12 @@
     #text(weight: "bold")[#title]
     #v(0.15em)
     #io-label[Входные данные:]
-    #block(inset: (left: 1.2em), text(font: ("Cousine",), size: 8.5pt, lang: "en", if type(input) == array {
+    #block(inset: (left: 1.2em), text(font: default-mono-font, size: 8.5pt, lang: "en", if type(input) == array {
       input.join(linebreak())
     } else { input }))
     #v(0.15em)
     #io-label[Выходные данные:]
-    #block(inset: (left: 1.2em), text(font: ("Cousine",), size: 8.5pt, lang: "en", output.join(linebreak())))
+    #block(inset: (left: 1.2em), text(font: default-mono-font, size: 8.5pt, lang: "en", output.join(linebreak())))
   ],
 )
 

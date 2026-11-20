@@ -5,7 +5,7 @@ export PATH="$HOME/.local/bin:$PATH"
 cd "$(dirname "$0")"
 
 if command -v typst >/dev/null 2>&1; then
-  for d in kr1 kr2 lr1 lr2; do
+  for d in kr/1 kr/2 lr/1 lr/2; do
     [ -d "$d" ] || continue
     echo "== $d"
     ( cd "$d" && typst compile --root .. main.typ out.pdf )
@@ -14,7 +14,7 @@ elif python3 -c "import typst" >/dev/null 2>&1; then
   # запасной вариант: PyPI-пакет `typst` (pip install --user typst)
   python3 - << 'PY'
 import typst
-for d in ["kr1", "kr2", "lr1", "lr2"]:
+for d in ["kr/1", "kr/2", "lr/1", "lr/2"]:
     import os
     if not os.path.isdir(d):
         continue

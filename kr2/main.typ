@@ -1,6 +1,6 @@
 #import "../lib/template.typ": *
 
-#show: setup.with(body-size: 12pt)
+#show: setup.with()
 
 #report(
   cover: "course",

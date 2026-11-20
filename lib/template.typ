@@ -26,8 +26,8 @@
 // ------------------------------------------------------------
 #let setup(
   doc,
-  body-font: "Times New Roman",        // замена Times New Roman (метрический аналог)
-  mono-font: "Hack",      // замена Liberation Mono
+  body-font: "Times New Roman",
+  mono-font: "Hack",
   body-size: 12pt,
   margins: (top: 1.25cm, bottom: 1.25cm, left: 3cm, right: 1.5cm),
   numbering: true,
@@ -37,7 +37,7 @@
     margin: margins,
     numbering: if numbering { "1" } else { none },
   )
-  set text(font: (body-font,), size: body-size, lang: "ru", hyphenate: true)
+  set text(font: (body-font,), size: 12pt, lang: "ru", hyphenate: true)
   set par(justify: true, leading: 0.55em, spacing: 0.55em, first-line-indent: 0pt)
   set list(indent: 1.2em, spacing: 0.25em, marker: [–])
   set enum(indent: 1.2em, spacing: 0.25em)
@@ -73,15 +73,12 @@
 #let title-page(m) = {
   set page(numbering: none)
   set par(justify: false, leading: 1.05em, spacing: 0.45em)
-  v(1.6cm)
   align(center)[
     #text(size: 16pt, weight: "bold")[#m.university] \
-    #text(size: 12pt, weight: "bold")[#m.university-sub]
-  ]
-  v(0.9cm)
-  align(center, text(size: 12pt, weight: "bold")[#m.faculty])
-  v(2.8cm)
-  align(center)[
+    #text(weight: "bold")[#m.university-sub]
+    #v(0.9cm)
+    #text(size: 12pt, weight: "bold")[#m.faculty])
+    #v(2.8cm)
     #text(size: 28pt, weight: "bold")[#m.doc-type] \
     #v(0.9cm)
     #text(size: 14pt, weight: "bold")[#m.course-line] \
@@ -91,17 +88,14 @@
     #text(size: 14pt, weight: "bold")[#m.semester семестр] \
     #text(size: 14pt, weight: "bold")[Задание № #m.task]
   ]
-  v(1fr)
+  v(4cm)
   align(right)[
     Студент #m.student \
     группы #m.group \
     № по списку #m.list-no \
     Контакты: #m.contacts \
     Работа выполнена: #m.work-done \
-    Преподаватель: #m.teacher
-  ]
-  v(1.2em)
-  align(right)[
+    Преподаватель: #m.teacher \
     Отчет сдан: #m.handed \
     Итоговая оценка: \_\_\_\_\_ \
     Подпись преподавателя: \_\_\_\_\_\_\_\_\_\_

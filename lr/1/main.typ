@@ -1,4 +1,4 @@
-#import "../lib/template.typ": *
+#import "../../lib/template.typ": *
 
 #show: setup.with()
 

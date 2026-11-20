@@ -74,19 +74,21 @@
   set page(numbering: none)
   set par(justify: false, leading: 1.05em, spacing: 0.45em)
   align(center)[
-    #text(size: 16pt, weight: "bold")[#m.university] \
-    #text(weight: "bold")[#m.university-sub]
+    #set text(weight: "bold")
+    #text(size: 16pt)[#m.university] \
+    #m.university-sub
     #v(0.9cm)
-    #text(size: 12pt, weight: "bold")[#m.faculty])
+    #m.faculty \
     #v(2.8cm)
-    #text(size: 28pt, weight: "bold")[#m.doc-type] \
+    #text(size: 28pt)[#m.doc-type] \
     #v(0.9cm)
-    #text(size: 14pt, weight: "bold")[#m.course-line] \
-    #v(0.25cm)
-    #text(size: 16pt, weight: "bold")[#m.course] \
+    #text(size: 14pt)[#m.course-line] \
     #v(0.9cm)
-    #text(size: 14pt, weight: "bold")[#m.semester семестр] \
-    #text(size: 14pt, weight: "bold")[Задание № #m.task]
+    #text(size: 16pt)[#m.course] \
+    #v(0.9cm)
+    #text(size: 14pt)[#m.semester семестр] \
+    #text(size: 14pt)[Задание № #m.task]
+
   ]
   v(4cm)
   align(right)[
@@ -265,15 +267,6 @@
   )
 ]
 
-// «Подпись студента ____» справа
-#let signature() = block(
-  above: 2.5em,
-  width: 100%,
-  align(right)[
-    #text(size: 11pt)[Подпись студента]
-    #box(width: 4.5cm, line(length: 100%, stroke: 0.5pt))
-  ],
-)
 
 // вывод работы (п. 11)
 #let conclusion(body) = block(above: 0.3em, body)
@@ -344,10 +337,9 @@
   scenario: none, // 7. Сценарий выполнения работы
   protocol-body: none, // 8. Распечатка протокола
   diary-rows: (), // 9. Дневник отладки (строки таблицы)
-  comments: [[по существу работы: замечания отсутствуют.]], // 10. Замечания автора
+  comments: [по существу работы: замечания отсутствуют.], // 10. Замечания автора
   conclusion-body: none, // 11. Вывод
-  // необщие строки ПО, добавляются к общему списку (например, утилита nam)
-  software-extra: (),
+  software-extra: (), // необщие строки ПО, добавляются к общему списку (например, утилита nam)
 ) = {
   let m = if meta != none { meta } else if cover == "course" { doc-meta } else { lab-meta }
   if cover == "course" { title-page(m) } else { lab-head(m) }
@@ -414,5 +406,6 @@
   item("11.", "Вывод:", none)
   conclusion(conclusion-body)
 
-  signature()
+  v(2.5em)
+  align(right)[Подпись студента \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_]
 }

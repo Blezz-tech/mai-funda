@@ -10,17 +10,15 @@
   doc-type: "Курсовая работа",
   course-line: "по курсу",
   course: "«Фундаментальная информатика»",
-  semester: "I семестр",
-  task: "Задание 1.",
-  student: "Студент Маркусь Евгений Олегович",
-  group: "группы М8О-113БВ-25",
-  list-no: "№ по списку 17",
-  contacts: "Контакты: markus.jenya04@yandex.ru",
-  work-done: "Работа выполнена: «6» октября 2025г.",
-  teacher: "Преподаватель: каф. 806 Никулин Сергей Петрович",
-  handed: "Отчет сдан «06» октября 2025г.",
-  grade: "Итоговая оценка: _____",
-  sign: "Подпись преподавателя: __________",
+  semester: "I",
+  task: "1",
+  student: "Маркусь Евгений Олегович",
+  group: "М8О-113БВ-25",
+  list-no: "17",
+  contacts: "markus.jenya04@yandex.ru",
+  work-done: "«6» октября 2025г.",
+  teacher: "каф. 806 Никулин Сергей Петрович",
+  handed: "«6» октября 2025г.",
 )
 
 // ------------------------------------------------------------
@@ -29,6 +27,7 @@
 //  Первой стоит Times New Roman — как в ODT-исходниках, дальше
 //  метрически совместимые замены (Liberation — то, чем LibreOffice
 //  подставляет Times New Roman сам), в конце — запасные.
+//  Для листингов первым идёт Hack (как в dev).
 // ------------------------------------------------------------
 #let default-body-font = (
   "Times New Roman",
@@ -37,7 +36,7 @@
   "DejaVu Serif",
 )
 #let default-mono-font = (
-  "Courier New",
+  "Hack",
   "Liberation Mono",
   "Cousine",
   "DejaVu Sans Mono",
@@ -95,38 +94,34 @@
 #let title-page(m) = {
   set page(numbering: none)
   set par(justify: false, leading: 1.05em, spacing: 0.45em)
-  v(1.6cm)
   align(center)[
-    #text(size: 16pt, weight: "bold")[#m.university] \
-    #text(size: 12pt, weight: "bold")[#m.university-sub]
-  ]
-  v(0.9cm)
-  align(center, text(size: 12pt, weight: "bold")[#m.faculty])
-  v(2.8cm)
-  align(center)[
-    #text(size: 28pt, weight: "bold")[#m.doc-type] \
+    #set text(weight: "bold")
+    #text(size: 16pt)[#m.university] \
+    #m.university-sub
     #v(0.9cm)
-    #text(size: 14pt, weight: "bold")[#m.course-line] \
-    #v(0.25cm)
-    #text(size: 16pt, weight: "bold")[#m.course] \
+    #m.faculty \
+    #v(2.8cm)
+    #text(size: 28pt)[#m.doc-type] \
     #v(0.9cm)
-    #text(size: 14pt, weight: "bold")[#m.semester] \
-    #text(size: 14pt, weight: "bold")[#m.task]
+    #text(size: 14pt)[#m.course-line] \
+    #v(0.9cm)
+    #text(size: 16pt)[#m.course] \
+    #v(0.9cm)
+    #text(size: 14pt)[#m.semester семестр] \
+    #text(size: 14pt)[Задание № #m.task]
+
   ]
-  v(1fr)
+  v(4cm)
   align(right)[
-    #m.student \
-    #m.group \
-    #m.list-no \
-    #m.contacts \
-    #m.work-done \
-    #m.teacher
-  ]
-  v(1.2em)
-  align(right)[
-    #m.handed \
-    #m.grade \
-    #m.sign
+    Студент #m.student \
+    группы #m.group \
+    № по списку #m.list-no \
+    Контакты: #m.contacts \
+    Работа выполнена: #m.work-done \
+    Преподаватель: #m.teacher \
+    Отчет сдан: #m.handed \
+    Итоговая оценка: \_\_\_\_\_ \
+    Подпись преподавателя: \_\_\_\_\_\_\_\_\_\_
   ]
   pagebreak()
   set page(numbering: "1")
@@ -182,8 +177,7 @@
   below: 0.15em,
   grid(
     columns: (2.4em, 1fr),
-    text(weight: "bold")[№#n],
-    [#input #h(0.5em) $arrow.r$ #h(0.5em) #output],
+    text(weight: "bold")[№#n], [#input #h(0.5em) $arrow.r$ #h(0.5em) #output],
   ),
 )
 
@@ -254,11 +248,14 @@
   let last = items.len() - 1
   block(
     inset: inset,
-    items.enumerate().map(((i, it)) => {
-      if i != last { [– #it] } else if type(it) == str {
-        if it.ends-with(".") { [– #it] } else { [– #(it + ".")] }
-      } else { [– #it.] }
-    }).join(linebreak()),
+    items
+      .enumerate()
+      .map(((i, it)) => {
+        if i != last { [– #it] } else if type(it) == str {
+          if it.ends-with(".") { [– #it] } else { [– #(it + ".")] }
+        } else { [– #it.] }
+      })
+      .join(linebreak()),
   )
 }
 
@@ -286,23 +283,11 @@
     columns: (0.8cm, 1.7cm, 2.2cm, 1.8cm, 3.1cm, 4.5cm, 2.9cm),
     align: center + horizon,
     stroke: 0.5pt,
-    table.header(
-      [№], [Лаб. или дом.], [Дата], [Время], [Событие],
-      [Действие по исправлению], [Примечание],
-    ),
+    table.header([№], [Лаб. или дом.], [Дата], [Время], [Событие], [Действие по исправлению], [Примечание]),
     ..rows.map(r => r.map(c => [#c])).flatten(),
   )
 ]
 
-// «Подпись студента ____» справа
-#let signature() = block(
-  above: 2.5em,
-  width: 100%,
-  align(right)[
-    #text(size: 11pt)[Подпись студента]
-    #box(width: 4.5cm, line(length: 100%, stroke: 0.5pt))
-  ],
-)
 
 // вывод работы (п. 11)
 #let conclusion(body) = block(above: 0.3em, body)
@@ -343,12 +328,12 @@
     #text(weight: "bold")[#title]
     #v(0.15em)
     #io-label[Входные данные:]
-    #block(inset: (left: 1.2em), text(font: default-mono-font, size: 8.5pt, lang: "en",
-      if type(input) == array { input.join(linebreak()) } else { input }))
+    #block(inset: (left: 1.2em), text(font: default-mono-font, size: 8.5pt, lang: "en", if type(input) == array {
+      input.join(linebreak())
+    } else { input }))
     #v(0.15em)
     #io-label[Выходные данные:]
-    #block(inset: (left: 1.2em), text(font: default-mono-font, size: 8.5pt, lang: "en",
-      output.join(linebreak())))
+    #block(inset: (left: 1.2em), text(font: default-mono-font, size: 8.5pt, lang: "en", output.join(linebreak())))
   ],
 )
 
@@ -366,17 +351,16 @@
   // реквизиты для титульного листа / шапки (по умолчанию — как в template.typ)
   meta: none,
   // содержимое пунктов
-  topic: none,              // 1. Тема
-  goal: none,               // 2. Цель работы
-  task: none,               // 3. Задание
-  idea: none,               // 6. Идея, метод, алгоритм решения задачи
-  scenario: none,           // 7. Сценарий выполнения работы
-  protocol-body: none,      // 8. Распечатка протокола
-  diary-rows: (),           // 9. Дневник отладки (строки таблицы)
-  comments: [[по существу работы: замечания отсутствуют.]],  // 10. Замечания автора
-  conclusion-body: none,    // 11. Вывод
-  // необщие строки ПО, добавляются к общему списку (например, утилита nam)
-  software-extra: (),
+  topic: none, // 1. Тема
+  goal: none, // 2. Цель работы
+  task: none, // 3. Задание
+  idea: none, // 6. Идея, метод, алгоритм решения задачи
+  scenario: none, // 7. Сценарий выполнения работы
+  protocol-body: none, // 8. Распечатка протокола
+  diary-rows: (), // 9. Дневник отладки (строки таблицы)
+  comments: [по существу работы: замечания отсутствуют.], // 10. Замечания автора
+  conclusion-body: none, // 11. Вывод
+  software-extra: (), // необщие строки ПО, добавляются к общему списку (например, утилита nam)
 ) = {
   let m = if meta != none { meta } else if cover == "course" { doc-meta } else { lab-meta }
   if cover == "course" { title-page(m) } else { lab-head(m) }
@@ -443,5 +427,6 @@
   item("11.", "Вывод:", none)
   conclusion(conclusion-body)
 
-  signature()
+  v(2.5em)
+  align(right)[Подпись студента \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_]
 }

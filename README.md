@@ -85,7 +85,7 @@ kr/1/ kr/2/ lr/1/ lr/2/  main.typ (только содержимое отчёт�
 | Протокол терминала с рисунками | `#protocol("/lr/1/src/session1.txt", images: (...))` |
 | Описание теста (вход/выход) | `#test-case("Тест 3", "0 1 2", (...))` |
 | Дневник отладки | `#diary(((...),(...)))` (строки — из `diary-rows`) |
-| «Подпись студента ____» | `#signature()` (вызывается из `report()`) |
+| «Подпись студента ____» | блок внутри `report()` |
 
 Текст отчётов лежит отдельно от оформления: чтобы поменять поля, кегль
 или шрифт — правится один файл `lib/template.typ`, тексты не трогаются.
@@ -102,14 +102,14 @@ kr/1/ kr/2/ lr/1/ lr/2/  main.typ (только содержимое отчёт�
 Times New Roman в ODT):
 
 * основной текст: `Times New Roman` → `Liberation Serif` → `Tinos` → `DejaVu Serif`;
-* листинги: `Courier New` → `Liberation Mono` → `Cousine` → `DejaVu Sans Mono`.
+* листинги: `Hack` → `Liberation Mono` → `Cousine` → `DejaVu Sans Mono`.
 
 Цепочки лежат в `lib/template.typ` (`default-body-font` / `default-mono-font`);
 чтобы поменять гарнитуру или порядок — правятся они или параметры `setup()`
 (`body-font:` / `mono-font:`). Если ни одно семейство из цепочки не найдено,
 `typst` подставит свои встроенные шрифты (другой рисунок и толщина) —
 в таком случае установите MS-corefonts (`ttf-ms-fonts` / `ttf-mscorefonts-installer`)
-или хотя бы croscore (`ttf-croscore`: Tinos/Cousine).
+или croscore (`ttf-croscore`: Tinos/Cousine), либо `Hack`.
 
 ## Что поправлено по сравнению с ODT
 

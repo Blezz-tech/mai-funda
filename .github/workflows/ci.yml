@@ -1,0 +1,43 @@
+name: CI
+
+# Проверка сборки на каждый коммит в основную ветку и на каждый PR.
+# Публичный репозиторий -> GitHub Actions бесплатны, все шаги на
+# официальных actions и системных утилитах, сторонних сервисов нет.
+on:
+  push:
+    branches: [main, master, dev]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Сборка PDF
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Typst + шрифты + сборка
+        uses: ./.github/actions/build-reports
+
+      - name: Загрузить PDF как артефакт
+        uses: actions/upload-artifact@v5
+        with:
+          name: laboratornye-raboty
+          path: dist/*.pdf
+          if-no-files-found: error
+
+      - name: Итог в summary
+        if: always()
+        run: |
+          if [ -f dist/summary.md ]; then
+            cat dist/summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi

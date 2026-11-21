@@ -10,7 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/build-reports
-      - name: Показать выбранные Typst шрифты
+      - name: Показать шрифты в summary
         run: |
-          typst fonts | grep -E "Times New Roman|Hack|Liberation" || true
-          ls dist
+          {
+            echo "### typst fonts (фильтр)"
+            typst fonts | grep -E "Times New Roman|Hack|Liberation|DejaVu" | sort -u
+            echo
+            echo "### dist"
+            ls -l dist
+          } >> "$GITHUB_STEP_SUMMARY"

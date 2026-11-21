@@ -92,7 +92,6 @@ course  f1.txt  lab  session.log
 f1.txt
 ~/downloads/test ❯ ls lab
 f1.txt
-⟦IMG:1⟧
 ~/downloads/test ❯ rm f1.txt
 ~/downloads/test ❯ cat course/f1.txt
 123
@@ -114,7 +113,6 @@ rm: невозможно удалить 'course': Is a directory
 ~/downloads/test ❯ cd lab
 downloads/test/lab ❯ ls
 f1.txt
-⟦IMG:2⟧
 downloads/test/lab ❯ rm f1.txt
 downloads/test/lab ❯ cd ..
 ~/downloads/test ❯ rm lab
@@ -138,7 +136,6 @@ session.log
 
     Terminal type is now qt
 gnuplot> plot sin(x)*cos(x)
-⟦IMG:3⟧
 gnuplot> set parametric
     dummy variable is t for curves, u/v for surfaces
 gnuplot>  set trange [0 to 2*pi]

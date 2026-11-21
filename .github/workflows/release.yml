@@ -1,0 +1,78 @@
+name: CD
+
+# Релизы с готовыми PDF.
+#
+#  * push тега v* -> обычный релиз (Latest) с PDF всех работ;
+#  * push в main/master -> релиз-сборка на этот коммит (prerelease,
+#    Latest не переключается), т.е. «релиз по коммиту».
+#
+# Публичный репозиторий -> Actions бесплатны. Всё на официальных
+# actions и gh CLI из образа раннера, сторонних сервисов нет.
+on:
+  push:
+    branches: [main, master]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cd-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Релиз с PDF
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Typst + шрифты + сборка
+        uses: ./.github/actions/build-reports
+
+      - name: Опубликовать релиз
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+
+          files=(dist/*.pdf)
+          if (( ${#files[@]} == 0 )); then
+            echo "Нечего прикладывать к релизу: dist/*.pdf пуст" >&2
+            exit 1
+          fi
+
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            # Релиз по тегу: v1.0.0 -> Latest
+            tag="${GITHUB_REF#refs/tags/}"
+            title="Отчёты по лабораторным работам ${tag}"
+            create_args=(--generate-notes --title "$title")
+          else
+            # Релиз по коммиту в основную ветку
+            sha="${GITHUB_SHA::7}"
+            tag="build-$(date -u +%Y%m%d-%H%M)-${sha}"
+            title="Сборка ${sha} от $(date -u +%d.%m.%Y)"
+            create_args=(
+              --prerelease --latest=false
+              --target "$GITHUB_SHA"
+              --title "$title"
+              --notes-file dist/summary.md
+            )
+          fi
+
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Релиз $tag уже есть — обновляю файлы"
+            gh release upload "$tag" "${files[@]}" --clobber
+          else
+            echo "Создаю релиз $tag"
+            gh release create "$tag" "${files[@]}" "${create_args[@]}"
+          fi
+
+          echo "Готово: https://github.com/${GH_REPO}/releases/tag/${tag}"

@@ -59,10 +59,13 @@ git tag v1.0 && git push origin v1.0     # -> GitHub Release v1.0 с PDF
 
 * версия Typst — `inputs.typst-version` в `.github/actions/build-reports/action.yml`
   (сейчас `v0.15.1`, качается официальный статический бинарник);
-* шрифты — там же: `fonts-liberation` (Liberation Serif/Mono — метрические
-  аналоги Times New Roman из `lib/lab.typ`) и `fonts-hack` для консоли;
-  если шрифта нет, шаг падает — иначе Typst молча подставит встроенный
-  и вёрстка разъедется;
+* шрифты — там же: `fonts-hack` (консоль), `fonts-liberation` (запасные
+  метрические аналоги), `fonts-dejavu-core` и **настоящий Times New Roman**
+  из `ttf-mscorefonts-installer` (multiverse, EULA принимается через
+  `debconf-set-selections`, 3 попытки скачивания с SourceForge). Шаг
+  «Проверить шрифты» падает, если в `typst fonts` нет `Times New Roman`,
+  `Hack`, `Liberation Serif` или `Liberation Mono` — иначе Typst молча
+  подставит встроенный и вёрстка разъедется;
 * релизы на каждый коммит в основную ветку — это работа `release` в
   `release.yml`; не нужны — уберите `branches:` из триггера `push`, и
   релизы будут только по тегам.
@@ -158,7 +161,9 @@ Times New Roman в ODT):
 (`body-font:` / `mono-font:`). Если ни одно семейство из цепочки не найдено,
 `typst` подставит свои встроенные шрифты (другой рисунок и толщина) —
 в таком случае установите MS-corefonts (`ttf-ms-fonts` / `ttf-mscorefonts-installer`)
-или croscore (`ttf-croscore`: Tinos/Cousine), либо `Hack`.
+или croscore (`ttf-croscore`: Tinos/Cousine), либо `Hack`. В CI это
+делается автоматически (см. раздел CI/CD), так что PDF из релиза
+набраны настоящим Times New Roman.
 
 ## Что поправлено по сравнению с ODT
 

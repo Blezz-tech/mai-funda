@@ -10,12 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/build-reports
-      - name: Показать шрифты в summary
+      - name: Отчёт о шрифтах
         run: |
-          {
-            echo "### typst fonts (фильтр)"
-            typst fonts | grep -E "Times New Roman|Hack|Liberation|DejaVu" | sort -u
-            echo
-            echo "### dist"
-            ls -l dist
-          } >> "$GITHUB_STEP_SUMMARY"
+          fonts=$(typst fonts | grep -E "^(Times New Roman|Hack|Liberation Serif|Liberation Mono)$" | sort -u | tr '\n' ',')
+          echo "::notice::typst fonts: $fonts"
+          echo "::notice::fc-match Times: $(fc-match 'Times New Roman')"
+          echo "::notice::fc-match Hack: $(fc-match 'Hack')"
+          for f in dist/*.pdf; do
+            echo "::notice::$f -> $(grep -a -o -E 'TimesNewRoman[A-Za-z]*|Hack-[A-Za-z]*|LiberationSerif[A-Za-z]*' "$f" | sort -u | tr '\n' ',')"
+          done

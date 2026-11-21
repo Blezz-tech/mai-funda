@@ -14,7 +14,7 @@
     (вариант № 1) Прочитать текст, изучить и выполнить команды ОС UNIX.
   ],
   idea: [
-    #console("/lr/1/src/commands.txt")
+    #console("/fr/2/src/commands.txt")
   ],
   scenario: [
     1\. Войти в операционную систему UNIX.
@@ -49,21 +49,21 @@
   protocol: [
     *Сессия 1.*
 
-    #console("/lr/1/src/session1.txt")
+    #console("/fr/2/src/session1.txt")
 
     #figure(
-      image("/lr/1/img/plot2d.png", width: 78%),
+      image("/fr/2/img/plot2d.png", width: 78%),
       caption: [Рисунок 1 — 2D-график sin(x)·cos(x) в gnuplot],
     )
 
     #figure(
-      image("/lr/1/img/plot_param.png", width: 78%),
+      image("/fr/2/img/plot_param.png", width: 78%),
       caption: [Рисунок 2 — параметрический график sin(t), cos(t)],
     )
 
     *Сессия 2.*
 
-    #console("/lr/1/src/session2.txt")
+    #console("/fr/2/src/session2.txt")
   ],
   diary-rows: (
     ("1", "дом.", "16.09.2025", "20:00", "Выполнение работы", "Нет", "Нет"),

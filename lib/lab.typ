@@ -28,7 +28,7 @@
 
 #let doc-meta = (
   student: "Маркусь Евгений Олегович",
-  teacher: "каф. 806 Никулин Сергей Петрович",
+  teacher: box[#highlight[каф. 806 Никулин Сергей Петрович]],
   group: "М8О-113БВ-25",
   list-no: "17",
   contacts: "markus.jenya04@yandex.ru",
@@ -81,7 +81,6 @@
 //  из терминала. Никаких массивов строк и ручных отступов.
 // ------------------------------------------------------------
 #let console(path, size: 8pt, lang: "text") = {
-  let p = if path.starts-with("/") { path } else { "/" + path }
   let content = read(path).replace("\t", "    ")
   block(
     width: 100%,

@@ -3,7 +3,7 @@
 #show: setup.with()
 
 #report(
-  number: "1",
+  number: "1 (2)",
   topic: [Операционная среда OC UNIX.],
   goal: [
     изучение и освоение программного обеспечения ОС UNIX и приобретение

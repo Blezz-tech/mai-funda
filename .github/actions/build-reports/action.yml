@@ -41,14 +41,21 @@ runs:
     - name: Проверить шрифты
       shell: bash
       run: |
+        # Без Liberation Typst молча подставит встроенный шрифт и вёрстка
+        # разъедется, поэтому здесь падаем, а не предупреждаем.
         available="$(typst fonts)"
+        missing=()
         for font in "Liberation Serif" "Liberation Mono" "Hack"; do
           if grep -qxF "$font" <<<"$available"; then
             echo "ok: $font"
           else
-            echo "::warning::шрифт «$font» не найден — Typst подставит встроенный"
+            missing+=("$font")
           fi
         done
+        if (( ${#missing[@]} )); then
+          echo "::error::Не найдены шрифты: ${missing[*]}"
+          exit 1
+        fi
 
     - name: Собрать PDF
       shell: bash

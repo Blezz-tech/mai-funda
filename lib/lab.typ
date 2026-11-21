@@ -111,7 +111,7 @@
 // Точка в конце автоматически добавляется к последнему пункту.
 #let _indented-list(items) = block(
   inset: (left: 1.25cm),
-  items.enumerate().map(((i, it)) => [#it #if i != items.len() { [text \ ] }]).join()
+  items.enumerate().map(((i, it)) => [#it #if i != items.len() { [\ ] }]).join()
 )
 
 // дневник отладки: 7 колонок, как в исходных ODT

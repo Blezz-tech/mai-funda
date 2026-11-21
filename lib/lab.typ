@@ -22,47 +22,29 @@
 // ============================================================
 
 // ------------------------------------------------------------
-//  Цепочки гарнитур: typst подставляет первую из списка,
-//  которая есть в системе. Первой стоит Times New Roman —
-//  как в ODT-исходниках, дальше метрически совместимые замены
-//  (Liberation — то, чем LibreOffice подставляет Times New Roman
-//  сам), в конце — запасные. Для консоли первым идёт Hack.
-// ------------------------------------------------------------
-#let default-body-font = (
-  "Times New Roman",
-  "Liberation Serif",
-  "Tinos",
-  "DejaVu Serif",
-)
-#let default-mono-font = (
-  "Hack",
-  "Liberation Mono",
-  "Cousine",
-  "DejaVu Sans Mono",
-)
-
-// ------------------------------------------------------------
 //  Глобальные настройки страницы и текста
 // ------------------------------------------------------------
 #let setup(
   doc,
-  body-font: default-body-font,
-  mono-font: default-mono-font,
-  body-size: 12pt,
-  margins: (top: 2cm, bottom: 2cm, left: 3cm, right: 1.5cm),
-  numbering: true,
+  body-font: (
+    "Times New Roman",
+    "Liberation Serif",
+    "DejaVu Serif",
+  ),
+  mono-font: (
+    "Hack",
+    "Liberation Mono",
+    "DejaVu Sans Mono",
+  ),
 ) = {
   set page(
     paper: "a4",
-    margin: margins,
-    numbering: if numbering { "1" } else { none },
+    margin: (top: 2cm, bottom: 2cm, left: 3cm, right: 1.5cm),
   )
-  set text(font: body-font, size: body-size, lang: "ru", hyphenate: true)
-  set par(justify: true, leading: 0.55em, spacing: 0.55em, first-line-indent: 0pt)
-  set list(indent: 1.2em, spacing: 0.25em, marker: [–])
-  set enum(indent: 1.2em, spacing: 0.25em)
-  set heading(numbering: none)
-  show heading: it => block(above: 1.1em, below: 0.5em, it)
+  set text(font: body-font, size: 14pt, lang: "ru", hyphenate: true)
+  set par(justify: true, leading: 0.4em, spacing: 0.4em, first-line-indent: 0pt)
+  set list(indent: 1.2em, spacing: 0.4em, marker: [–])
+  set enum(indent: 1.2em, spacing: 0.4em)
   set figure(kind: image, gap: 0.3em)
   set figure.caption(separator: none)
   show figure.caption: it => block(
@@ -73,7 +55,7 @@
   set table(stroke: 0.5pt)
   show table.cell: it => {
     set text(size: 8pt)
-    set par(justify: false, leading: 0.55em)
+    set par(justify: false, leading: 0.4em)
     align(center + horizon, it)
   }
   // моноширинные блоки (консоль): плотный интерлиньяж,
@@ -104,7 +86,7 @@
     stroke: 0.4pt + rgb("#cccccc"),
     above: 0.5em,
     below: 0.5em,
-    text(font: default-mono-font, size: size, lang: "en", hyphenate: false)[
+    text(font: "Hack", size: size, lang: "en", hyphenate: false)[
       #raw(content, block: true, lang: "text")
     ],
   )
@@ -127,7 +109,7 @@
 
 // список «оборудование / ПО» с отступом.
 // Точка в конце автоматически добавляется к последнему пункту.
-#let _indented-list(items,) = {
+#let _indented-list(items) = {
   block(
     inset: (left: 1.25cm),
     items
@@ -219,7 +201,7 @@
 ) = {
   // шапка ЛР: заголовок по центру, реквизиты с отступом слева
   {
-    set par(justify: false, leading: 1.0em, spacing: 0.35em)
+    set par(justify: false)
     align(center, text(size: 14pt, weight: "bold", hyphenate: false)[
       Отчёт по лабораторной работе № #number по курсу «Фундаментальная информатика».
     ])
@@ -228,7 +210,7 @@
       Студент группы #group #student № по списку #list-no.
     ])
     v(0.35em)
-    block(inset: (left: 3.5em), text(size: 11pt)[
+    block(inset: (left: 7em), text(size: 11pt)[
       Контакты: #contacts \
       Работа выполнена: #done \
       Преподаватель: каф. 806 Никулин Сергей Петрович \

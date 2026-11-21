@@ -9,10 +9,41 @@ inputs:
     description: Тег релиза Typst на GitHub
     required: false
     default: v0.15.1
+  require-times-new-roman:
+    description: >-
+      true — падать, если настоящий Times New Roman поставить не удалось
+      (иначе будет предупреждение, а текст наберётся метрически совместимым
+      Liberation Serif из цепочки lib/lab.typ).
+    required: false
+    default: "true"
+
+outputs:
+  pdf-count:
+    description: Сколько PDF собрано
+    value: ${{ steps.build.outputs.pdf-count }}
 
 runs:
   using: composite
   steps:
+    # Дешёвая проверка до установки Typst и шрифтов: опечатка в пути
+    # («/fr/2/...» вместо «/lr/2/...») или отсутствующий number: валят
+    # сборку за секунду и с понятным текстом, а не в середине компиляции.
+    - name: Проверить отчёты (ссылки, номера, дубли)
+      shell: bash
+      run: ./build.sh check
+
+    - name: Окружение
+      shell: bash
+      run: |
+        set -euo pipefail
+        . /etc/os-release
+        echo "Раннер: $PRETTY_NAME, $(uname -m)"
+        {
+          echo "### Окружение"
+          echo
+          echo "* раннер: \`$PRETTY_NAME\`, \`$(uname -m)\`"
+        } >> "$GITHUB_STEP_SUMMARY"
+
     - name: Установить Typst
       shell: bash
       env:
@@ -22,70 +53,146 @@ runs:
         case "$(uname -m)" in
           x86_64)  target=x86_64-unknown-linux-musl ;;
           aarch64) target=aarch64-unknown-linux-musl ;;
-          *) echo "Неизвестная архитектура: $(uname -m)" >&2; exit 1 ;;
+          *) echo "::error::Неизвестная архитектура: $(uname -m)"; exit 1 ;;
         esac
+
         url="https://github.com/typst/typst/releases/download/${TYPST_VERSION}/typst-${target}.tar.xz"
-        curl -fsSL "$url" -o /tmp/typst.tar.xz
-        tar -xJf /tmp/typst.tar.xz -C /tmp
-        sudo install -m 0755 "/tmp/typst-${target}/typst" /usr/local/bin/typst
+
+        installed=""
+        for attempt in 1 2 3; do
+          if curl -fsSL --retry 3 --retry-delay 2 --connect-timeout 20 \
+               "$url" -o /tmp/typst.tar.xz &&
+             tar -xJf /tmp/typst.tar.xz -C /tmp &&
+             sudo install -m 0755 "/tmp/typst-${target}/typst" /usr/local/bin/typst; then
+            installed=1
+            break
+          fi
+          echo "::warning::Typst ${TYPST_VERSION}: попытка $attempt не удалась"
+          sleep 5
+        done
+        if [[ -z $installed ]]; then
+          echo "::error::Не удалось скачать Typst ${TYPST_VERSION} с $url"
+          exit 1
+        fi
+
         typst --version
 
-    - name: Установить шрифты
+    - name: Установить базовые шрифты
       shell: bash
       run: |
         set -euo pipefail
 
-        has_font() { typst fonts | grep -qxF "$1"; }
-
-        # Hack (консоль) и Liberation Serif/Mono (метрические аналоги
-        # Times New Roman и Courier) — обычные пакеты Ubuntu.
-        sudo apt-get update
-        sudo apt-get install -y --no-install-recommends \
-          fonts-hack fonts-liberation fonts-dejavu-core fontconfig
-
-        # Настоящий Times New Roman: пакет msttcorefonts лежит в multiverse
-        # и требует принятия EULA, поэтому preseed + noninteractive.
-        if ! has_font "Times New Roman"; then
-          sudo add-apt-repository -y multiverse
-          echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" \
-            | sudo debconf-set-selections
+        # retry_apt <пакеты...> — apt-get install с повторами: зеркала
+        # на раннерах иногда отвечают 5xx, это не повод краснеть сборке.
+        retry_apt() {
+          local attempt
           for attempt in 1 2 3; do
-            echo "Попытка установки ttf-mscorefonts-installer: $attempt"
             if sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
-                 --no-install-recommends ttf-mscorefonts-installer; then
-              break
+                 --no-install-recommends "$@"; then
+              return 0
             fi
-            sudo apt-get update
+            echo "::warning::apt-get install $*: попытка $attempt не удалась"
+            sudo apt-get update || true
             sleep 5
           done
+          return 1
+        }
+
+        sudo apt-get update
+        # Hack (консоль) и Liberation Serif/Mono (метрические аналоги
+        # Times New Roman и Courier) — обычные пакеты Ubuntu.
+        retry_apt fonts-hack fonts-liberation fonts-dejavu-core fontconfig ||
+          { echo "::error::Не удалось поставить базовые шрифты"; exit 1; }
+
+    - name: Установить Times New Roman
+      shell: bash
+      env:
+        REQUIRE_TIMES: ${{ inputs.require-times-new-roman }}
+      run: |
+        set -euo pipefail
+
+        if typst fonts | grep -qxF "Times New Roman"; then
+          echo "Times New Roman уже есть"
+          exit 0
         fi
+
+        # Настоящий Times New Roman: пакет ttf-mscorefonts-installer лежит
+        # в multiverse и требует принятия EULA, поэтому preseed +
+        # noninteractive. Сами шрифты он тянет с SourceForge — это самое
+        # ненадёжное место в пайплайне, отсюда три попытки.
+        sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+          --no-install-recommends software-properties-common
+        sudo add-apt-repository -y multiverse
+        sudo apt-get update
+        echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" |
+          sudo debconf-set-selections
+
+        ok=""
+        for attempt in 1 2 3; do
+          echo "Попытка установки ttf-mscorefonts-installer: $attempt"
+          if sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+               --no-install-recommends ttf-mscorefonts-installer; then
+            ok=1
+            break
+          fi
+          # недокачанный пакет остаётся в «полуустановленном» виде,
+          # поэтому перед повтором чиним состояние и обновляем индексы
+          sudo DEBIAN_FRONTEND=noninteractive dpkg --configure -a || true
+          sudo apt-get update || true
+          sleep 5
+        done
 
         # Times New Roman кладётся в /usr/share/fonts/truetype/msttcorefonts.
         sudo fc-cache -f >/dev/null 2>&1 || true
-        ls -l /usr/share/fonts/truetype/msttcorefonts 2>/dev/null || true
+
+        if [[ -z $ok ]]; then
+          if [[ $REQUIRE_TIMES == "true" ]]; then
+            echo "::error::ttf-mscorefonts-installer не установился за 3 попытки — Times New Roman недоступен"
+            exit 1
+          fi
+          echo "::warning::Times New Roman недоступен, текст наберётся Liberation Serif (метрически совместим)"
+        fi
 
     - name: Проверить шрифты
       shell: bash
+      env:
+        REQUIRE_TIMES: ${{ inputs.require-times-new-roman }}
       run: |
         set -euo pipefail
+
         # Без нужных шрифтов Typst молча подставит встроенный и вёрстка
-        # разъедется, поэтому здесь падаем, а не предупреждаем.
+        # разъедется, поэтому здесь проверяем каждую гарнитуру из цепочек
+        # lib/lab.typ и падаем, а не предупреждаем.
         available="$(typst fonts)"
         echo "$available" | sort -u
 
         missing=()
-        for font in "Times New Roman" "Hack" "Liberation Serif" "Liberation Mono"; do
+        for font in "Hack" "Liberation Serif" "Liberation Mono"; do
           if grep -qxF "$font" <<<"$available"; then
             echo "ok: $font"
           else
             missing+=("$font")
           fi
         done
+
+        if grep -qxF "Times New Roman" <<<"$available"; then
+          echo "ok: Times New Roman"
+        elif [[ $REQUIRE_TIMES == "true" ]]; then
+          missing+=("Times New Roman")
+        else
+          echo "::warning::Times New Roman нет — используется Liberation Serif"
+        fi
+
         if (( ${#missing[@]} )); then
           echo "::error::Не найдены шрифты: ${missing[*]}"
           exit 1
         fi
 
     - name: Собрать PDF
+      id: build
       shell: bash
-      run: ./build.sh
+      run: |
+        set -euo pipefail
+        ./build.sh
+        count=$(find dist -maxdepth 1 -name '*.pdf' | wc -l)
+        echo "pdf-count=$count" >> "$GITHUB_OUTPUT"

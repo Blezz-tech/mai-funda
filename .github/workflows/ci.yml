@@ -19,13 +19,19 @@ concurrency:
 jobs:
   build:
     name: Сборка PDF
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
+      # Опечатки в путях и номерах ловятся за секунду, до установки
+      # Typst и шрифтов (полная установка занимает пару минут).
+      - name: Проверить отчёты без сборки
+        run: ./build.sh check
+
       - name: Typst + шрифты + сборка
+        id: build
         uses: ./.github/actions/build-reports
 
       - name: Загрузить PDF как артефакт
@@ -34,10 +40,17 @@ jobs:
           name: laboratornye-raboty
           path: dist/*.pdf
           if-no-files-found: error
+          retention-days: 30
 
       - name: Итог в summary
         if: always()
         run: |
-          if [ -f dist/summary.md ]; then
-            cat dist/summary.md >> "$GITHUB_STEP_SUMMARY"
-          fi
+          {
+            if [ -f dist/summary.md ]; then
+              cat dist/summary.md
+              echo
+            fi
+            if [ -n "${{ steps.build.outputs.pdf-count }}" ]; then
+              echo "Собрано PDF: ${{ steps.build.outputs.pdf-count }}"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

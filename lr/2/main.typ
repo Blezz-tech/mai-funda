@@ -45,11 +45,11 @@
   scenario: [
     main.c:
 
-    #console("/lr/2/src/main.c")
+    #console("/lr/2/src/main.c", lang: "c")
 
     Makefile:
 
-    #console("/lr/2/src/Makefile")
+    #console("/lr/2/src/Makefile", lang: "makefile")
 
     *Описание тестов* (проверка тестов происходит в конце протокола):
 

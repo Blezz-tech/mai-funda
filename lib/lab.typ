@@ -80,7 +80,7 @@
 //  моноширинным шрифтом на светло-сером фоне — как скопировано
 //  из терминала. Никаких массивов строк и ручных отступов.
 // ------------------------------------------------------------
-#let console(path, size: 8pt) = {
+#let console(path, size: 8pt, lang: "text") = {
   let p = if path.starts-with("/") { path } else { "/" + path }
   let content = read(path).replace("\t", "    ")
   block(
@@ -89,7 +89,7 @@
     inset: 6pt,
     stroke: 0.4pt + rgb("#cccccc"),
     text(font: "Hack", size: size, lang: "en", hyphenate: false)[
-      #raw(content, block: true, lang: "text")
+      #raw(content, block: true, lang: lang)
     ],
   )
 }

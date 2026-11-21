@@ -1,0 +1,8 @@
+lr/5/src on  main [!+⇡] ❯ ./sdtu4 ./main.tu 
+ 10101
+Program done by 94 steps
+
+State: 13
+ 10101 01010 
+            ^
+lr/5/src on  main [!+⇡] took 7s ❯ 

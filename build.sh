@@ -1,5 +1,4 @@
-# Сборка всех отчётов: ./build.sh -> dist/<путь>.pdf
-# Исключается каталог old_works.
+# Сборка всех лабораторных работ: ./build.sh -> dist/<путь>.pdf
 set -euo pipefail
 
 export PATH="$HOME/.local/bin:$PATH"
@@ -19,21 +18,17 @@ fi
 rm -rf "$DIST"
 mkdir -p "$DIST"
 
-# Находим все main.typ, исключая old_works и каталог empty.
 mapfile -t files < <(
-  find . \
-    -path './old_works' -prune -o \
-    -path './empty' -prune -o \
-    -type f -name "$ENTRY" -print | sort
+  find . -type f -name "$ENTRY" -print | sort
 )
 
 if (( ${#files[@]} == 0 )); then
-  echo "Не найдено ни одного $ENTRY (кроме исключённых каталогов)." >&2
+  echo "Не найдено ни одного $ENTRY." >&2
   exit 1
 fi
 
 for file in "${files[@]}"; do
-  # ./kr/1/main.typ -> kr/1
+  # ./lr/1/main.typ -> lr/1
   rel_dir="${file#./}"
   rel_dir="${rel_dir%/*}"
 

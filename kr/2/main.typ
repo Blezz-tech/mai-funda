@@ -1,4 +1,4 @@
-#import "../../lib/template.typ": *
+#import "/lib/template.typ": *
 
 #show: setup.with()
 
@@ -61,7 +61,7 @@
 
     #v(0.2em)
     #block(inset: (left: 1.2em))[
-      #text(font: ("Cousine",), size: 10pt)[
+      #text(font: ("Hack",), size: 10pt)[
         № 1 #h(0.8em) | #h(1.2em) \(->\) #h(1.2em) |
         #linebreak()
         № 2 #h(0.8em) || #h(0.9em) \(->\) #h(0.9em) ||||

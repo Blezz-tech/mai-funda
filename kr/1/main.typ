@@ -1,4 +1,4 @@
-#import "../../lib/template.typ": *
+#import "/lib/template.typ": *
 
 #show: setup.with()
 
@@ -120,7 +120,7 @@
 
     *Терминал:*
 
-    #text(font: "Cousine", size: 8.5pt, lang: "en")[
+    #text(font: "Hack", size: 8.5pt, lang: "en")[
       tu on #h(0.2em)main [?] via py v3.13.7 ❯ ./turun program.tu test.tst
     ]
     #listing("/kr/1/src/terminal.txt")

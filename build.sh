@@ -1,30 +1,47 @@
-#!/usr/bin/env bash
-# Сборка всех отчётов: ./build.sh  ->  <папка>/out.pdf
+# Сборка всех отчётов: ./build.sh -> dist/<путь>.pdf
+# Исключается каталог old_works.
 set -euo pipefail
+
 export PATH="$HOME/.local/bin:$PATH"
 cd "$(dirname "$0")"
 
-if command -v typst >/dev/null 2>&1; then
-  for d in kr/1 kr/2 lr/1 lr/2; do
-    [ -d "$d" ] || continue
-    echo "== $d"
-    ( cd "$d" && typst compile --root .. main.typ out.pdf )
-  done
-elif python3 -c "import typst" >/dev/null 2>&1; then
-  # запасной вариант: PyPI-пакет `typst` (pip install --user typst)
-  python3 - << 'PY'
-import typst
-for d in ["kr/1", "kr/2", "lr/1", "lr/2"]:
-    import os
-    if not os.path.isdir(d):
-        continue
-    print(f"== {d}")
-    pdf = typst.compile(f"{d}/main.typ", root=".")
-    with open(f"{d}/out.pdf", "wb") as f:
-        f.write(pdf)
-PY
-else
-  echo "Ошибка: нужен typst 0.13+ (CLI в PATH) или запасной вариант: pip install --user typst" >&2
+ROOT="."
+DIST="dist"
+ENTRY="main.typ"
+
+if ! command -v typst >/dev/null 2>&1; then
+  echo "Ошибка: не найден typst в PATH." >&2
+  echo "Установите: cargo install typst-cli" >&2
+  echo "Или добавьте бинарник в PATH." >&2
   exit 1
 fi
-echo "готово"
+
+rm -rf "$DIST"
+mkdir -p "$DIST"
+
+# Находим все main.typ, исключая old_works и каталог empty.
+mapfile -t files < <(
+  find . \
+    -path './old_works' -prune -o \
+    -path './empty' -prune -o \
+    -type f -name "$ENTRY" -print | sort
+)
+
+if (( ${#files[@]} == 0 )); then
+  echo "Не найдено ни одного $ENTRY (кроме исключённых каталогов)." >&2
+  exit 1
+fi
+
+for file in "${files[@]}"; do
+  # ./kr/1/main.typ -> kr/1
+  rel_dir="${file#./}"
+  rel_dir="${rel_dir%/*}"
+
+  out="$DIST/${rel_dir//\//_}.pdf"
+  mkdir -p "$(dirname "$out")"
+
+  echo "== $rel_dir -> $out"
+  typst compile --root "$ROOT" "$file" "$out"
+done
+
+echo "Готово: PDF-файлы в $DIST/"

@@ -14,22 +14,22 @@ downloads  git-repos  nixos-pc-conf  'Библиотека calibre'
 .gtkrc-2.0     .parsec       '.tor project'      downloads
 ~ ❯ cd downloads/test
 ~/downloads/test ❯ ls -l
-.rw-r--r-- 0 jenya 16 сен 22:06 session.log
+.rw-r--r-- 0 jenya 22 ноя 01:12 session.log
 ~/downloads/test ❯ who
-jenya    tty1         2025-09-16 21:54
+jenya    tty1         2026-11-22 01:12
 ~/downloads/test ❯ whoami
 jenya
-~ ❯ w
- 00:35:26 up 2 days,  9:19,  1 user,  load average: 0,34, 0,49, 0,59
+~/downloads/test ❯ w
+ 01:13:34 up 9 min,  1 user,  load average: 0,42, 0,65, 0,41
 USER     TTY       LOGIN@   IDLE   JCPU   PCPU  WHAT
-jenya    tty1      Чт15    2days  0.03s  0.03s /nix/store/6g426l79z8iss69ajdr3f16dlh33bs9y-plasma-workspace-6.8.3/bin/startplasma-wayland
+jenya    tty1      01:04    9:32   0.03s  0.03s /nix/store/6g426l79z8iss69ajdr3f16dlh33bs9y-plasma-
 ~/downloads/test ❯ tty
-/dev/pts/2
+/dev/pts/3
 ~/downloads/test ❯ hostname
 nixos-jenya
 ~/downloads/test ❯ uname -a
-Linux nixos-jenya 6.16.5 #1-NixOS SMP PREEMPT_DYNAMIC Thu Sep  4 14:55:53 UTC 2025 x86_64 GNU/Linux
+Linux nixos-jenya 7.3.4 #1-NixOS SMP PREEMPT_DYNAMIC @1794334210 x86_64 GNU/Linux
 ~/downloads/test ❯ pwd
 /home/jenya/downloads/test
 ~/downloads/test ❯ who
-jenya    tty1         2025-09-16 21:54
+jenya    tty1         2026-11-22 01:12

@@ -1,7 +1,7 @@
 ~/downloads/test ❯ who
-jenya    tty1         2025-09-16 21:54
+jenya    tty1         2026-11-22 01:12
 ~/downloads/test ❯ date
-Вт 16 сен 2025 22:17:55 MSK
+Вс 22 ноя 2026 01:12:23 MSK
 ~/downloads/test ❯ pwd
 /home/jenya/downloads/test
 ~/downloads/test ❯ ls

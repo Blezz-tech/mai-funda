@@ -24,35 +24,22 @@ concurrency:
 jobs:
   release:
     name: Релиз с PDF
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
+
+      - name: Проверить отчёты
+        run: .github/scripts/check-reports.sh
 
       - name: Typst + шрифты + сборка
         uses: ./.github/actions/build-reports
 
-      - name: Собрать архив
-        run: |
-          set -euo pipefail
-          # Единственное место, где имена «Лабораторная работа N.pdf» доживают
-          # до скачивания: GitHub переименовывает ассеты релиза в ASCII.
-          python3 - <<'PY'
-          import pathlib, zipfile
-
-          dist = pathlib.Path("dist")
-          pdfs = sorted(dist.glob("*.pdf"))
-          if not pdfs:
-              raise SystemExit("dist/*.pdf пуст — нечего упаковывать")
-          with zipfile.ZipFile("lab-reports.zip", "w", zipfile.ZIP_DEFLATED) as zf:
-              for pdf in pdfs:
-                  zf.write(pdf, arcname=pdf.name)
-          print("В архиве:", ", ".join(p.name for p in pdfs))
-          PY
-          unzip -l lab-reports.zip
+      - name: Собрать архив и имена ассетов
+        run: python3 .github/scripts/release-assets.py
 
       - name: Опубликовать релиз
         env:
@@ -60,29 +47,22 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
-          shopt -s nullglob
 
-          files=(dist/*.pdf)
-          if (( ${#files[@]} == 0 )); then
-            echo "Нечего прикладывать к релизу: dist/*.pdf пуст" >&2
-            exit 1
-          fi
+          [[ -f lab-reports.zip ]] || { echo "::error::нет lab-reports.zip"; exit 1; }
+          [[ -s release-assets/list.txt ]] || { echo "::error::нет release-assets/list.txt"; exit 1; }
 
           # GitHub переписывает имена ассетов релиза в ASCII
           # («Лабораторная работа 1.pdf» -> «1.pdf»), поэтому:
           #   * архив lab-reports.zip — имена внутри ровно как в dist/;
           #   * lab-N.pdf — те же PDF отдельными файлами с ASCII-именами
-          #     и кириллической подписью ассета.
+          #     и кириллической подписью ассета;
+          #   * summary.md — таблица собранных работ.
           assets=(lab-reports.zip)
-          mkdir -p release-assets
-          for pdf in "${files[@]}"; do
-            name="$(basename "$pdf" .pdf)"
-            num="${name#Лабораторная работа }"
-            num="$(printf '%s' "$num" | tr -cd '0-9a-zA-Z')"
-            copy="release-assets/lab-${num}.pdf"
-            cp "$pdf" "$copy"
-            assets+=("${copy}#${name}")
-          done
+          while IFS= read -r line; do
+            [[ -n $line ]] || continue
+            assets+=("$line")
+          done < release-assets/list.txt
+          assets+=("dist/summary.md#summary.md")
 
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             # Релиз по тегу: v1.0.0 -> Latest

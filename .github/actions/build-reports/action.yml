@@ -1,14 +1,27 @@
 name: Сборка отчётов
 description: >
   Ставит Typst и шрифты из шрифтовой цепочки lib/lab.typ (Times New Roman,
-  Hack, Liberation) и собирает PDF всех лабораторных работ в dist/ через
-  ./build.sh. Требует, чтобы репозиторий уже был склонирован (actions/checkout).
+  Hack, Liberation), собирает PDF всех лабораторных работ в dist/ через
+  ./build.sh и пишет dist/summary.md. Требует, чтобы репозиторий уже был
+  склонирован (actions/checkout). Вся логика — в .github/scripts/.
 
 inputs:
   typst-version:
     description: Тег релиза Typst на GitHub
     required: false
     default: v0.15.1
+  require-times-new-roman:
+    description: >-
+      true — падать, если настоящий Times New Roman поставить не удалось
+      (иначе будет предупреждение, а текст наберётся метрически совместимым
+      Liberation Serif из цепочки lib/lab.typ).
+    required: false
+    default: "true"
+
+outputs:
+  pdf-count:
+    description: Сколько PDF собрано
+    value: ${{ steps.build.outputs.pdf-count }}
 
 runs:
   using: composite
@@ -17,75 +30,26 @@ runs:
       shell: bash
       env:
         TYPST_VERSION: ${{ inputs.typst-version }}
-      run: |
-        set -euo pipefail
-        case "$(uname -m)" in
-          x86_64)  target=x86_64-unknown-linux-musl ;;
-          aarch64) target=aarch64-unknown-linux-musl ;;
-          *) echo "Неизвестная архитектура: $(uname -m)" >&2; exit 1 ;;
-        esac
-        url="https://github.com/typst/typst/releases/download/${TYPST_VERSION}/typst-${target}.tar.xz"
-        curl -fsSL "$url" -o /tmp/typst.tar.xz
-        tar -xJf /tmp/typst.tar.xz -C /tmp
-        sudo install -m 0755 "/tmp/typst-${target}/typst" /usr/local/bin/typst
-        typst --version
+      run: .github/scripts/install-typst.sh
 
     - name: Установить шрифты
       shell: bash
-      run: |
-        set -euo pipefail
-
-        has_font() { typst fonts | grep -qxF "$1"; }
-
-        # Hack (консоль) и Liberation Serif/Mono (метрические аналоги
-        # Times New Roman и Courier) — обычные пакеты Ubuntu.
-        sudo apt-get update
-        sudo apt-get install -y --no-install-recommends \
-          fonts-hack fonts-liberation fonts-dejavu-core fontconfig
-
-        # Настоящий Times New Roman: пакет msttcorefonts лежит в multiverse
-        # и требует принятия EULA, поэтому preseed + noninteractive.
-        if ! has_font "Times New Roman"; then
-          sudo add-apt-repository -y multiverse
-          echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" \
-            | sudo debconf-set-selections
-          for attempt in 1 2 3; do
-            echo "Попытка установки ttf-mscorefonts-installer: $attempt"
-            if sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
-                 --no-install-recommends ttf-mscorefonts-installer; then
-              break
-            fi
-            sudo apt-get update
-            sleep 5
-          done
-        fi
-
-        # Times New Roman кладётся в /usr/share/fonts/truetype/msttcorefonts.
-        sudo fc-cache -f >/dev/null 2>&1 || true
-        ls -l /usr/share/fonts/truetype/msttcorefonts 2>/dev/null || true
+      env:
+        REQUIRE_TIMES: ${{ inputs.require-times-new-roman }}
+      run: .github/scripts/install-fonts.sh
 
     - name: Проверить шрифты
       shell: bash
-      run: |
-        set -euo pipefail
-        # Без нужных шрифтов Typst молча подставит встроенный и вёрстка
-        # разъедется, поэтому здесь падаем, а не предупреждаем.
-        available="$(typst fonts)"
-        echo "$available" | sort -u
-
-        missing=()
-        for font in "Times New Roman" "Hack" "Liberation Serif" "Liberation Mono"; do
-          if grep -qxF "$font" <<<"$available"; then
-            echo "ok: $font"
-          else
-            missing+=("$font")
-          fi
-        done
-        if (( ${#missing[@]} )); then
-          echo "::error::Не найдены шрифты: ${missing[*]}"
-          exit 1
-        fi
+      env:
+        REQUIRE_TIMES: ${{ inputs.require-times-new-roman }}
+      run: .github/scripts/check-fonts.sh
 
     - name: Собрать PDF
+      id: build
       shell: bash
-      run: ./build.sh
+      run: |
+        set -euo pipefail
+        ./build.sh
+        .github/scripts/build-summary.sh
+        count=$(find dist -maxdepth 1 -name '*.pdf' | wc -l)
+        echo "pdf-count=$count" >> "$GITHUB_OUTPUT"

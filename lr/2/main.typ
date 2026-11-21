@@ -46,23 +46,108 @@
     9\. Завершить сеанс работы.
   ],
   protocol: [
-    *Сессия 1.*
+    *1. Домашний каталог, пользователь и сведения о системе.*
 
-    #console("/lr/2/src/session1.txt")
+    #console("/lr/2/src/protocol/system-information.txt")
+
+    *2. Справочная система и навигация по файловой системе.*
+
+    Просмотр справки и переходы между домашним, корневым и другими каталогами:
+
+    #console("/lr/2/src/protocol/help-and-navigation.txt")
+
+    Дополнительный просмотр системных каталогов `/bin`, `/run` и `/dev`:
+
+    #console("/lr/2/src/protocol/system-directories.txt")
+
+    *3. Создание, просмотр и редактирование текстовых файлов.*
+
+    Создание файла с помощью `cat`, просмотр содержимого и редактирование
+    в Neovim (`nvim`):
+
+    #console("/lr/2/src/protocol/text-file-creation-and-editing.txt")
+
+    Перенаправление вывода, дозапись в файл и проверка изменений:
+
+    #console("/lr/2/src/protocol/text-editing-and-redirection.txt")
+
+    Ввод многострочного текста с помощью here-document:
+
+    #console("/lr/2/src/protocol/heredoc-input.txt")
+
+    *4. Копирование и удаление файлов.*
+
+    #console("/lr/2/src/protocol/file-copying-and-deletion.txt")
+
+    *5. Работа с каталогами, перемещение файлов и относительные пути.*
+
+    Создание каталогов, копирование в них файлов и удаление каталогов:
+
+    #console("/lr/2/src/protocol/directory-operations.txt")
+
+    Перемещение групп файлов и переходы по относительным путям:
+
+    #console("/lr/2/src/protocol/file-moving-and-relative-paths.txt")
+
+    Дополнительные опыты с удалением и подтверждением операции оболочкой:
+
+    #console("/lr/2/src/protocol/deletion-and-confirmation.txt")
+
+    *6. Генерация имён файлов и использование шаблонов.*
+
+    Генерация имён с помощью фигурных скобок и применение шаблона `*`:
+
+    #console("/lr/2/src/protocol/filename-patterns-basic.txt")
+
+    Дополнительные примеры отбора файлов по началу и окончанию имени:
+
+    #console("/lr/2/src/protocol/filename-patterns-extended.txt")
+
+    *7. Просмотр процессов и использование конвейеров.*
+
+    #console("/lr/2/src/protocol/processes-and-pipelines.txt")
+
+    *8. Построение графиков в gnuplot.*
+
+    *8.1. Двумерный график функции.*
+
+    #console("/lr/2/src/protocol/gnuplot-2d.txt")
 
     #figure(
-      image("/lr/2/img/plot2d.png", width: 78%),
-      caption: [Рисунок 1 — 2D-график sin(x)·cos(x) в gnuplot],
+      image("/lr/2/img/plot2d.png", width: 70%),
+      caption: [График функции $y = sin(x) dot cos(x)$ в gnuplot],
     )
+
+    *8.2. Параметрическая окружность.*
+
+    #console("/lr/2/src/protocol/gnuplot-parametric-2d.txt")
 
     #figure(
-      image("/lr/2/img/plot_param.png", width: 78%),
-      caption: [Рисунок 2 — параметрический график sin(t), cos(t)],
+      image("/lr/2/img/plot_param.png", width: 68%),
+      caption: [Параметрическая кривая $x(t) = sin(t)$, $y(t) = cos(t)$],
     )
 
-    *Сессия 2.*
+    *8.3. Параметрическая сфера.*
 
-    #console("/lr/2/src/session2.txt")
+    #console("/lr/2/src/protocol/gnuplot-parametric-3d.txt")
+
+    *8.4. График в текстовом терминале.*
+
+    #console("/lr/2/src/protocol/gnuplot-ascii.txt")
+
+    *9. Калькулятор bc: основания ввода и вывода.*
+
+    Интерактивные опыты с параметрами `ibase` и `obase`:
+
+    #console("/lr/2/src/protocol/bc-interactive-number-bases.txt")
+
+    Последовательное изменение оснований в выражениях:
+
+    #console("/lr/2/src/protocol/bc-sequential-base-changes.txt")
+
+    *10. Завершение сеанса протоколирования.*
+
+    #console("/lr/2/src/protocol/session-completion.txt")
   ],
   diary-rows: (
     (

@@ -1,0 +1,16 @@
+~/downloads/test ❯ ps
+    PID TTY          TIME CMD
+  18389 pts/2    00:00:00 zsh
+  19135 pts/2    00:00:00 ps
+~/downloads/test ❯ ps
+    PID TTY          TIME CMD
+  18389 pts/2    00:00:00 zsh
+  19166 pts/2    00:00:00 ps
+~/downloads/test ❯ ps -a
+    PID TTY          TIME CMD
+  18050 pts/0    00:00:00 foot
+  18230 pts/1    00:00:00 zsh
+  18388 pts/1    00:00:00 script
+  19199 pts/2    00:00:00 ps
+~/downloads/test ❯ ps -a | grep zsh
+  18230 pts/1    00:00:00 zsh

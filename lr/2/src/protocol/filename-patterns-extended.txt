@@ -1,0 +1,38 @@
+~/downloads/test ❯ touch file{1..100}
+~/downloads/test ❯ ls
+file1   file11  file21  file31  file41  file51  file61  file71  file81  file91
+file2   file12  file22  file32  file42  file52  file62  file72  file82  file92
+file3   file13  file23  file33  file43  file53  file63  file73  file83  file93
+file4   file14  file24  file34  file44  file54  file64  file74  file84  file94
+file5   file15  file25  file35  file45  file55  file65  file75  file85  file95
+file6   file16  file26  file36  file46  file56  file66  file76  file86  file96
+file7   file17  file27  file37  file47  file57  file67  file77  file87  file97
+file8   file18  file28  file38  file48  file58  file68  file78  file88  file98
+file9   file19  file29  file39  file49  file59  file69  file79  file89  file99
+file10  file20  file30  file40  file50  file60  file70  file80  file90  file100
+~/downloads/test ❯ rm file2*
+~/downloads/test ❯ ls
+file1   file11  file30  file39  file48  file57  file66  file75  file84  file93
+file3   file12  file31  file40  file49  file58  file67  file76  file85  file94
+file4   file13  file32  file41  file50  file59  file68  file77  file86  file95
+file5   file14  file33  file42  file51  file60  file69  file78  file87  file96
+file6   file15  file34  file43  file52  file61  file70  file79  file88  file97
+file7   file16  file35  file44  file53  file62  file71  file80  file89  file98
+file8   file17  file36  file45  file54  file63  file72  file81  file90  file99
+file9   file18  file37  file46  file55  file64  file73  file82  file91  file100
+file10  file19  file38  file47  file56  file65  file74  file83  file92
+~/downloads/test ❯ rm file3* file4* file5*
+~/downloads/test ❯ ls
+file1   file11  file17  file63  file69  file75  file81  file87  file93  file99
+file6   file12  file18  file64  file70  file76  file82  file88  file94  file100
+file7   file13  file19  file65  file71  file77  file83  file89  file95
+file8   file14  file60  file66  file72  file78  file84  file90  file96
+file9   file15  file61  file67  file73  file79  file85  file91  file97
+file10  file16  file62  file68  file74  file80  file86  file92  file98
+~/downloads/test ❯ rm file*8
+~/downloads/test ❯ ls
+file1   file11  file16  file62  file67  file73  file79  file84  file90  file95
+file6   file12  file17  file63  file69  file74  file80  file85  file91  file96
+file7   file13  file19  file64  file70  file75  file81  file86  file92  file97
+file9   file14  file60  file65  file71  file76  file82  file87  file93  file99
+file10  file15  file61  file66  file72  file77  file83  file89  file94  file100

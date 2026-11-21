@@ -1,0 +1,49 @@
+~/downloads/test ❯ mkdir folder_{1..10}
+~/downloads/test ❯ ls
+file1   file12  file19  file65  file72  file79  file85  file92  file99    folder_5
+file6   file13  file60  file66  file73  file80  file86  file93  file100   folder_6
+file7   file14  file61  file67  file74  file81  file87  file94  folder_1  folder_7
+file9   file15  file62  file69  file75  file82  file89  file95  folder_2  folder_8
+file10  file16  file63  file70  file76  file83  file90  file96  folder_3  folder_9
+file11  file17  file64  file71  file77  file84  file91  file97  folder_4  folder_10
+~/downloads/test ❯ mv file7* folder_7
+~/downloads/test ❯ mv file8* folder_8
+~/downloads/test ❯ ls
+file1   file12  file17  file63  file69  file94  file100   folder_5  folder_10
+file6   file13  file19  file64  file90  file95  folder_1  folder_6
+file9   file14  file60  file65  file91  file96  folder_2  folder_7
+file10  file15  file61  file66  file92  file97  folder_3  folder_8
+file11  file16  file62  file67  file93  file99  folder_4  folder_9
+~/downloads/test ❯ mv file9* folder_9
+~/downloads/test ❯ ls
+file1   file12  file16  file61  file65  file100   folder_4  folder_8
+file6   file13  file17  file62  file66  folder_1  folder_5  folder_9
+file10  file14  file19  file63  file67  folder_2  folder_6  folder_10
+file11  file15  file60  file64  file69  folder_3  folder_7
+~/downloads/test ❯ mv file6* folder_6
+~/downloads/test ❯ ls
+file1   file12  file15  file19    folder_2  folder_5  folder_8
+file10  file13  file16  file100   folder_3  folder_6  folder_9
+file11  file14  file17  folder_1  folder_4  folder_7  folder_10
+~/downloads/test ❯ cd 6
+cd: no such file or directory: 6
+~/downloads/test ❯ cd folder_6
+downloads/test/folder_6 ❯ ls
+file6  file60  file61  file62  file63  file64  file65  file66  file67  file69
+downloads/test/folder_6 ❯ cd .
+downloads/test/folder_6 ❯ cd folder_7
+cd: no such file or directory: folder_7
+downloads/test/folder_6 ❯ ls
+file6  file60  file61  file62  file63  file64  file65  file66  file67  file69
+downloads/test/folder_6 ❯ cd ..
+~/downloads/test ❯ cd folder_7
+downloads/test/folder_7 ❯ ls
+file7  file70  file71  file72  file73  file74  file75  file76  file77  file79
+downloads/test/folder_7 ❯ cd ../folder_8
+downloads/test/folder_8 ❯ ls
+file80  file81  file82  file83  file84  file85  file86  file87  file89
+downloads/test/folder_8 ❯ cd ..
+~/downloads/test ❯ ls
+file1   file12  file15  file19    folder_2  folder_5  folder_8
+file10  file13  file16  file100   folder_3  folder_6  folder_9
+file11  file14  file17  folder_1  folder_4  folder_7  folder_10

@@ -1,0 +1,5 @@
+~/downloads/test ❯ rm file *
+zsh: sure you want to delete all 21 files in /home/jenya/downloads/test [yn]? n
+~/downloads/test ❯ rm file*
+~/downloads/test ❯ rm -r folder_*
+~/downloads/test ❯ ls

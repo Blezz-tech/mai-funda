@@ -1,0 +1,42 @@
+~/downloads/test ❯ cd /bin
+/bin# ❯ ls
+sh
+/bin# ❯ cd /run
+/run# ❯ ls
+binfmt          keys    NetworkManager    podman      tmpfiles.d              wrappers
+booted-system   lock    nfqws.pid         pppd        udev
+credentials     log     nixos             resolvconf  udev-configure-printer
+cups            lvm     nscd              sddm        udisks2
+current-system  motd.d  opengl-driver     sudo        user
+dbus            mount   opengl-driver-32  systemd     utmp
+/run# ❯ cd /dev
+/dev# ❯ ls
+autofs           hpet          nvme0      tpmrm0  tty27  tty56         vcsa1
+block            hugepages     nvme0n1    tty     tty28  tty57         vcsa2
+bsg              hwrng         nvme0n1p1  tty0    tty29  tty58         vcsa3
+btrfs-control    input         nvme0n1p2  tty1    tty30  tty59         vcsa4
+bus              kfd           nvme1      tty2    tty31  tty60         vcsa5
+char             kmsg          nvme1n1    tty3    tty32  tty61         vcsa6
+console          kvm           nvme1n1p1  tty4    tty33  tty62         vcsu
+core             log           nvram      tty5    tty34  tty63         vcsu1
+cpu              loop-control  parport0   tty6    tty35  ttyS0         vcsu2
+cpu_dma_latency  loop0         port       tty7    tty36  ttyS1         vcsu3
+cuse             loop1         ppp        tty8    tty37  ttyS2         vcsu4
+disk             loop2         ptmx       tty9    tty38  ttyS3         vcsu5
+dri              loop3         pts        tty10   tty39  udmabuf       vcsu6
+drm_dp_aux0      loop4         random     tty11   tty40  uhid          vfio
+drm_dp_aux1      loop5         rfkill     tty12   tty41  uinput        vga_arbiter
+drm_dp_aux2      loop6         root       tty13   tty42  urandom       vhci
+fb0              loop7         rtc        tty14   tty43  usb           vhost-net
+fd               mapper        rtc0       tty15   tty44  userfaultfd   vhost-vsock
+full             media0        sda        tty16   tty45  userio        video0
+fuse             mei0          sda1       tty17   tty46  v4l           video1
+gpiochip0        mem           sdb        tty18   tty47  v4l2loopback  video2
+hidraw0          mqueue        sdb1       tty19   tty48  vcs           watchdog
+hidraw1          mtd           shm        tty20   tty49  vcs1          watchdog0
+hidraw2          mtd0          snapshot   tty21   tty50  vcs2          watchdog1
+hidraw3          mtd0ro        snd        tty22   tty51  vcs3          zero
+hidraw4          net           stderr     tty23   tty52  vcs4
+hidraw5          ng0n1         stdin      tty24   tty53  vcs5
+hidraw6          ng1n1         stdout     tty25   tty54  vcs6
+hidraw7          null          tpm0       tty26   tty55  vcsa

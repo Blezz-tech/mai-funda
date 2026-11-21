@@ -1,0 +1,45 @@
+~/downloads/test ❯ touch file.txt
+~/downloads/test ❯ cat >file.txt
+123
+
+Hellow world
+~/downloads/test took 9s ❯ ls
+file.txt
+~/downloads/test ❯ cat file.txt
+123
+
+Hellow world
+~/downloads/test ❯ cp file.txt file2.txt
+~/downloads/test ❯ ls
+file.txt  file2.txt
+~/downloads/test ❯ cat file2.txt
+123
+
+Hellow world
+~/downloads/test ❯ nvim file1.txt
+~/downloads/test took 2s ❯ nvim file.txt
+~/downloads/test took 7s ❯ cat file.txt
+123
+
+Hellow world
+
+
+change
+~/downloads/test ❯ cat >> file.txt
+add text
+~/downloads/test took 7s ❯ cat file.txt
+123
+
+Hellow world
+
+
+change
+add text
+~/downloads/test ❯ cat file2.txt
+123
+
+Hellow world
+~/downloads/test ❯ ls
+file.txt  file2.txt
+~/downloads/test ❯ rm file*
+~/downloads/test ❯ ls

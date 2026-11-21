@@ -1,0 +1,19 @@
+~/downloads/test ❯ cat > f1.txt
+123
+123
+456
+~/downloads/test took 5s ❯ ls
+f1.txt  session.log
+~/downloads/test ❯ cat f1.txt
+123
+123
+456
+~/downloads/test ❯ nvim f1.txt
+~/downloads/test took 4s ❯ cat f1.txt
+123
+456
+
+~/downloads/test ❯ cat f1.txt
+123
+456
+

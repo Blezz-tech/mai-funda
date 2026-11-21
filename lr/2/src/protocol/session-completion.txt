@@ -1,0 +1,10 @@
+~/downloads/test ❯ who
+jenya    tty1         2025-09-16 21:54
+~/downloads/test ❯ date
+Вт 16 сен 2025 22:17:55 MSK
+~/downloads/test ❯ pwd
+/home/jenya/downloads/test
+~/downloads/test ❯ ls
+session.log
+~/downloads/test ❯ exit
+Script done.

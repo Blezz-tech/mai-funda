@@ -1,0 +1,344 @@
+~/downloads/test ❯ touch file{1..100}
+~/downloads/test ❯ ls
+file1   file11  file21  file31  file41  file51  file61  file71  file81  file91
+file2   file12  file22  file32  file42  file52  file62  file72  file82  file92
+file3   file13  file23  file33  file43  file53  file63  file73  file83  file93
+file4   file14  file24  file34  file44  file54  file64  file74  file84  file94
+file5   file15  file25  file35  file45  file55  file65  file75  file85  file95
+file6   file16  file26  file36  file46  file56  file66  file76  file86  file96
+file7   file17  file27  file37  file47  file57  file67  file77  file87  file97
+file8   file18  file28  file38  file48  file58  file68  file78  file88  file98
+file9   file19  file29  file39  file49  file59  file69  file79  file89  file99
+file10  file20  file30  file40  file50  file60  file70  file80  file90  file100
+~/downloads/test ❯ rm file2*
+~/downloads/test ❯ ls
+file1   file11  file30  file39  file48  file57  file66  file75  file84  file93
+file3   file12  file31  file40  file49  file58  file67  file76  file85  file94
+file4   file13  file32  file41  file50  file59  file68  file77  file86  file95
+file5   file14  file33  file42  file51  file60  file69  file78  file87  file96
+file6   file15  file34  file43  file52  file61  file70  file79  file88  file97
+file7   file16  file35  file44  file53  file62  file71  file80  file89  file98
+file8   file17  file36  file45  file54  file63  file72  file81  file90  file99
+file9   file18  file37  file46  file55  file64  file73  file82  file91  file100
+file10  file19  file38  file47  file56  file65  file74  file83  file92
+~/downloads/test ❯ rm file3* file4* file5*
+~/downloads/test ❯ ls
+file1   file11  file17  file63  file69  file75  file81  file87  file93  file99
+file6   file12  file18  file64  file70  file76  file82  file88  file94  file100
+file7   file13  file19  file65  file71  file77  file83  file89  file95
+file8   file14  file60  file66  file72  file78  file84  file90  file96
+file9   file15  file61  file67  file73  file79  file85  file91  file97
+file10  file16  file62  file68  file74  file80  file86  file92  file98
+~/downloads/test ❯ rm file*8
+~/downloads/test ❯ ls
+file1   file11  file16  file62  file67  file73  file79  file84  file90  file95
+file6   file12  file17  file63  file69  file74  file80  file85  file91  file96
+file7   file13  file19  file64  file70  file75  file81  file86  file92  file97
+file9   file14  file60  file65  file71  file76  file82  file87  file93  file99
+file10  file15  file61  file66  file72  file77  file83  file89  file94  file100
+~/downloads/test ❯ mkdir folder_{1..10}
+~/downloads/test ❯ ls
+file1   file12  file19  file65  file72  file79  file85  file92  file99    folder_5
+file6   file13  file60  file66  file73  file80  file86  file93  file100   folder_6
+file7   file14  file61  file67  file74  file81  file87  file94  folder_1  folder_7
+file9   file15  file62  file69  file75  file82  file89  file95  folder_2  folder_8
+file10  file16  file63  file70  file76  file83  file90  file96  folder_3  folder_9
+file11  file17  file64  file71  file77  file84  file91  file97  folder_4  folder_10
+~/downloads/test ❯ mv file7* folder_7
+~/downloads/test ❯ mv file8* folder_8
+~/downloads/test ❯ ls
+file1   file12  file17  file63  file69  file94  file100   folder_5  folder_10
+file6   file13  file19  file64  file90  file95  folder_1  folder_6
+file9   file14  file60  file65  file91  file96  folder_2  folder_7
+file10  file15  file61  file66  file92  file97  folder_3  folder_8
+file11  file16  file62  file67  file93  file99  folder_4  folder_9
+~/downloads/test ❯ mv file9* folder_9
+~/downloads/test ❯ ls
+file1   file12  file16  file61  file65  file100   folder_4  folder_8
+file6   file13  file17  file62  file66  folder_1  folder_5  folder_9
+file10  file14  file19  file63  file67  folder_2  folder_6  folder_10
+file11  file15  file60  file64  file69  folder_3  folder_7
+~/downloads/test ❯ mv file6* folder_6
+~/downloads/test ❯ ls
+file1   file12  file15  file19    folder_2  folder_5  folder_8
+file10  file13  file16  file100   folder_3  folder_6  folder_9
+file11  file14  file17  folder_1  folder_4  folder_7  folder_10
+~/downloads/test ❯ cd 6
+cd: no such file or directory: 6
+~/downloads/test ❯ cd folder_6
+downloads/test/folder_6 ❯ ls
+file6  file60  file61  file62  file63  file64  file65  file66  file67  file69
+downloads/test/folder_6 ❯ cd .
+downloads/test/folder_6 ❯ cd folder_7
+cd: no such file or directory: folder_7
+downloads/test/folder_6 ❯ ls
+file6  file60  file61  file62  file63  file64  file65  file66  file67  file69
+downloads/test/folder_6 ❯ cd ..
+~/downloads/test ❯ cd folder_7
+downloads/test/folder_7 ❯ ls
+file7  file70  file71  file72  file73  file74  file75  file76  file77  file79
+downloads/test/folder_7 ❯ cd ../folder_8
+downloads/test/folder_8 ❯ ls
+file80  file81  file82  file83  file84  file85  file86  file87  file89
+downloads/test/folder_8 ❯ cd ..
+~/downloads/test ❯ ls
+file1   file12  file15  file19    folder_2  folder_5  folder_8
+file10  file13  file16  file100   folder_3  folder_6  folder_9
+file11  file14  file17  folder_1  folder_4  folder_7  folder_10
+~/downloads/test ❯ rm file *
+zsh: sure you want to delete all 21 files in /home/jenya/downloads/test [yn]? n
+~/downloads/test ❯ rm file*
+~/downloads/test ❯ rm -r folder_*
+~/downloads/test ❯ ls
+~/downloads/test ❯ touch file.txt
+~/downloads/test ❯ cat >file.txt
+123
+
+Hellow world
+~/downloads/test took 9s ❯ ls
+file.txt
+~/downloads/test ❯ cat file.txt
+123
+
+Hellow world
+~/downloads/test ❯ cp file.txt file2.txt
+~/downloads/test ❯ ls
+file.txt  file2.txt
+~/downloads/test ❯ cat file2.txt
+123
+
+Hellow world
+~/downloads/test ❯ nvim file1.txt
+~/downloads/test took 2s ❯ nvim file.txt
+~/downloads/test took 7s ❯ cat file.txt
+123
+
+Hellow world
+
+
+change
+~/downloads/test ❯ cat >> file.txt
+add text
+~/downloads/test took 7s ❯ cat file.txt
+123
+
+Hellow world
+
+
+change
+add text
+~/downloads/test ❯ cat file2.txt
+123
+
+Hellow world
+~/downloads/test ❯ ls
+file.txt  file2.txt
+~/downloads/test ❯ rm file*
+~/downloads/test ❯ ls
+~/downloads/test took 47s ❯ bc
+bc 1.08.2
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2018, 2024 Free Software Foundation, Inc.
+This is free software with ABSOLUTELY NO WARRANTY.
+For details type `warranty'.
+10
+10
+ibase=2
+10
+2
+110
+6
+obase=2
+101
+101
+10
+10
+obase=1000
+1001
+11
+1000
+10
+1111
+17
+111
+7
+obase=10000
+1000000
+40
+1000
+8
+10000
+10
+11111
+1F
+obase=1010
+100000
+32
+1010
+10
+1001
+9
+ibase=100
+obase=2
+10
+100
+7
+111
+6
+110
+obase=2
+10
+10
+base=1000
+1
+1
+2
+10
+7
+111
+10
+1000
+obase=10
+10
+10
+7
+7
+obase=12
+7
+7
+10
+8
+11
+9
+12
+10
+obase=20
+20
+10
+17
+F
+ibase=12
+obase=2
+10
+1010
+8
+1000
+4
+100
+obase=8
+10
+12
+8
+10
+obase=10
+10
+10
+5
+5
+obase=16
+10
+A
+16
+10
+256
+100
+15
+F
+255
+FF
+ibase=16
+obase=2
+F
+1111
+10
+10000
+obase=8
+F
+17
+FF
+377
+obase=A
+F
+15
+A
+10
+B
+11
+obase=10
+F
+F
+B
+B
+FF
+FF
+
+~/downloads/test ❯ touch test.txt
+~/downloads/test ❯ cat > test.txt << EOF
+∙ E O F best wirte text
+∙
+∙ NEED MORE TEXTS
+∙
+∙ EOF
+~/downloads/test ❯ ls
+test.txt
+~/downloads/test ❯ cat test.txt
+E O F best wirte text
+
+NEED MORE TEXTS
+
+~/downloads/test ❯ bc
+bc 1.08.2
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2018, 2024 Free Software Foundation, Inc.
+This is free software with ABSOLUTELY NO WARRANTY.
+For details type `warranty'.
+obase=10; ibase=16; 128
+296
+obase=2; ibase=10; 128
+100101000
+obase=8; ibase=10; 128
+450
+obase=10; ibase=10; 128
+128
+obase=16; ibase=10; 128
+ 13 10
+~/downloads/test ❯ cd /bin
+/bin# ❯ ls
+sh
+/bin# ❯ cd /run
+/run# ❯ ls
+binfmt          keys    NetworkManager    podman      tmpfiles.d              wrappers
+booted-system   lock    nfqws.pid         pppd        udev
+credentials     log     nixos             resolvconf  udev-configure-printer
+cups            lvm     nscd              sddm        udisks2
+current-system  motd.d  opengl-driver     sudo        user
+dbus            mount   opengl-driver-32  systemd     utmp
+/run# ❯ cd /dev
+/dev# ❯ ls
+autofs           hpet          nvme0      tpmrm0  tty27  tty56         vcsa1
+block            hugepages     nvme0n1    tty     tty28  tty57         vcsa2
+bsg              hwrng         nvme0n1p1  tty0    tty29  tty58         vcsa3
+btrfs-control    input         nvme0n1p2  tty1    tty30  tty59         vcsa4
+bus              kfd           nvme1      tty2    tty31  tty60         vcsa5
+char             kmsg          nvme1n1    tty3    tty32  tty61         vcsa6
+console          kvm           nvme1n1p1  tty4    tty33  tty62         vcsu
+core             log           nvram      tty5    tty34  tty63         vcsu1
+cpu              loop-control  parport0   tty6    tty35  ttyS0         vcsu2
+cpu_dma_latency  loop0         port       tty7    tty36  ttyS1         vcsu3
+cuse             loop1         ppp        tty8    tty37  ttyS2         vcsu4
+disk             loop2         ptmx       tty9    tty38  ttyS3         vcsu5
+dri              loop3         pts        tty10   tty39  udmabuf       vcsu6
+drm_dp_aux0      loop4         random     tty11   tty40  uhid          vfio
+drm_dp_aux1      loop5         rfkill     tty12   tty41  uinput        vga_arbiter
+drm_dp_aux2      loop6         root       tty13   tty42  urandom       vhci
+fb0              loop7         rtc        tty14   tty43  usb           vhost-net
+fd               mapper        rtc0       tty15   tty44  userfaultfd   vhost-vsock
+full             media0        sda        tty16   tty45  userio        video0
+fuse             mei0          sda1       tty17   tty46  v4l           video1
+gpiochip0        mem           sdb        tty18   tty47  v4l2loopback  video2
+hidraw0          mqueue        sdb1       tty19   tty48  vcs           watchdog
+hidraw1          mtd           shm        tty20   tty49  vcs1          watchdog0
+hidraw2          mtd0          snapshot   tty21   tty50  vcs2          watchdog1
+hidraw3          mtd0ro        snd        tty22   tty51  vcs3          zero
+hidraw4          net           stderr     tty23   tty52  vcs4
+hidraw5          ng0n1         stdin      tty24   tty53  vcs5
+hidraw6          ng1n1         stdout     tty25   tty54  vcs6
+hidraw7          null          tpm0       tty26   tty55  vcsa

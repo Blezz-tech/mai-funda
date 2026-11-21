@@ -1,0 +1,249 @@
+~/downloads/test ❯ cd
+~ ❯ ls
+Documents  games      media          nixpkgs
+downloads  git-repos  nixos-pc-conf  'Библиотека calibre'
+~ ❯ ls -a
+.bash_history  .icons        .parsec-persistent  .var          games
+.cache         .java         .pki                .vscode       git-repos
+.config        .local        .pulse-cookie       .zcompdump    media
+.cursor        .minecraft    .renpy              .zoom         nixos-pc-conf
+.dotnet        .mono         .ssh                .zsh_history  nixpkgs
+.ftb           .mozilla      .steam              .zshenv       'Библиотека calibre'
+.ftba          .nix-defexpr  .steampath          .zshrc
+.gnupg         .nix-profile  .steampid           Documents
+.gtkrc-2.0     .parsec       '.tor project'      downloads
+~ ❯ cd downloads/test
+~/downloads/test ❯ ls -l
+.rw-r--r-- 0 jenya 16 сен 22:06 session.log
+~/downloads/test ❯ who
+jenya    tty1         2025-09-16 21:54
+~/downloads/test ❯ whoami
+jenya
+~/downloads/test ❯ w
+ 22:06:46 up 12 min,  2 users,  load average: 0,40, 0,56, 0,37
+USER     TTY        LOGIN@   IDLE   JCPU   PCPU WHAT
+jenya    tty1      21:54   12:00   0.16s  0.16s /nix/store/rx2j7f6kb31342sc7gr17aiwn1w
+jenya              21:54    1:38   0.00s  1.15s /run/current-system/systemd/lib/system
+~/downloads/test ❯ tty
+/dev/pts/2
+~/downloads/test ❯ hostname
+nixos-jenya
+~/downloads/test ❯ uname -a
+Linux nixos-jenya 6.16.5 #1-NixOS SMP PREEMPT_DYNAMIC Thu Sep  4 14:55:53 UTC 2025 x86_64 GNU/Linux
+~/downloads/test ❯ pwd
+/home/jenya/downloads/test
+~/downloads/test ❯ who
+jenya    tty1         2025-09-16 21:54
+~/downloads/test ❯ man man
+~/downloads/test ❯ man ls
+~/downloads/test ❯ cd /
+/# ❯ ls
+bin   dev  home  lib64       nix  proc  run  sys  usr
+boot  etc  lib   lost+found  opt  root  srv  tmp  var
+/# ❯ cd /bin
+/bin# ❯ ls
+sh
+/bin# ❯ cd
+~ ❯ cd ..
+/home# ❯ ls
+jenya
+/home# ❯ cd
+~ ❯ cd downloads/test
+~/downloads/test ❯ cat > f1.txt
+123
+123
+456
+~/downloads/test took 5s ❯ ls
+f1.txt  session.log
+~/downloads/test ❯ cat f1.txt
+123
+123
+456
+~/downloads/test ❯ nvim f1.txt
+~/downloads/test took 4s ❯ cat f1.txt
+123
+456
+
+~/downloads/test ❯ cat f1.txt
+123
+456
+
+~/downloads/test ❯ cp f1.txt f{2..3}.txt
+cp: цель 'f3.txt': No such file or directory
+~/downloads/test ❯ cp f1.txt f2.txt
+~/downloads/test ❯ cp f1.txt f3.txt
+~/downloads/test ❯ ls
+f1.txt  f2.txt  f3.txt  session.log
+~/downloads/test ❯ cat f2.txt
+123
+456
+
+~/downloads/test ❯ cat f3.txt
+123
+456
+
+~/downloads/test ❯ rm f2.txt f3.txt
+~/downloads/test ❯ mkdir lab course
+~/downloads/test ❯ ls
+course  f1.txt  lab  session.log
+~/downloads/test ❯ cp f1.txt lab/f1.txt
+~/downloads/test ❯ cp f1.txt course
+~/downloads/test ❯ ls course
+f1.txt
+~/downloads/test ❯ ls lab
+f1.txt
+⟦IMG:1⟧
+~/downloads/test ❯ rm f1.txt
+~/downloads/test ❯ cat course/f1.txt
+123
+456
+
+~/downloads/test ❯ cat lab/f1.txt
+123
+456
+
+~/downloads/test ❯ ls
+course  lab  session.log
+~/downloads/test ❯ cd course
+downloads/test/course ❯ ls
+f1.txt
+downloads/test/course ❯ cd ..
+~/downloads/test ❯ rm course
+rm: невозможно удалить 'course': Is a directory
+~/downloads/test ❯ rm -r course
+~/downloads/test ❯ cd lab
+downloads/test/lab ❯ ls
+f1.txt
+⟦IMG:2⟧
+downloads/test/lab ❯ rm f1.txt
+downloads/test/lab ❯ cd ..
+~/downloads/test ❯ rm lab
+rm: невозможно удалить 'lab': Is a directory
+~/downloads/test ❯ rm lab -r
+~/downloads/test ❯ "Нужен флаг -r"
+zsh: command not found: Нужен флаг -r
+~/downloads/test ❯ ls
+session.log
+~/downloads/test ❯ gnuplot
+
+    G N U P L O T
+    Version 6.0 patchlevel 3    last modified 2025-06-07
+
+    Copyright (C) 1986-1993, 1998, 2004, 2007-2025
+    Thomas Williams, Colin Kelley and many others
+
+    gnuplot home:     http://www.gnuplot.info
+    faq, bugs, etc:   type "help FAQ"
+    immediate help:   type "help"  (plot window: hit 'h')
+
+    Terminal type is now qt
+gnuplot> plot sin(x)*cos(x)
+⟦IMG:3⟧
+gnuplot> set parametric
+    dummy variable is t for curves, u/v for surfaces
+gnuplot>  set trange [0 to 2*pi]
+gnuplot> set xrange [-1 to 1]
+gnuplot> set xrange [-1 to 1]
+gnuplot> set xrange [-1 to 1]
+gnuplot>  set yrange [-1 to 1]
+gnuplot>  plot sin(t),cos(t)
+gnuplot>  set zrange [-1 to 1]
+gnuplot>  set urange [0 to 2*pi]
+gnuplot> set vrange [0 to 2*pi]
+gnuplot> set nohidden3d
+             ^
+         warning: deprecated syntax, use "unset"
+gnuplot> unset hidden3d
+gnuplot> splot sin(u)*sin(v),sin(u)*cos(v),cos(u)
+
+gnuplot> set noparametric
+             ^
+         warning: deprecated syntax, use "unset"
+    dummy variable is x for curves, x/y for surfaces
+gnuplot> unset parametric
+gnuplot> exit
+~/downloads/test took 1m55s ❯ gnuplot
+
+    G N U P L O T
+    Version 6.0 patchlevel 3    last modified 2025-06-07
+
+    Copyright (C) 1986-1993, 1998, 2004, 2007-2025
+    Thomas Williams, Colin Kelley and many others
+
+    gnuplot home:     http://www.gnuplot.info
+    faq, bugs, etc:   type "help FAQ"
+    immediate help:   type "help"  (plot window: hit 'h')
+
+    Terminal type is now qt
+gnuplot> set term dumb
+
+Terminal type is now 'dumb'
+Options are 'feed enhanced size 79, 24 aspect 2, 1 mono noattributes'
+gnuplot> sin(x)
+         ^
+         invalid command
+
+gnuplot> plot sin(x)
+
+
+    1 +--------------------------------------------------------------------+
+      |                *  *              +  *  **         +       *  *     |
+  0.8 |-+             *   *                 *    *          sin(x* *******-|
+      |              *     *                *    *               *    *    |
+  0.6 |-+            *      *              *     *               *     * +-|
+      |              *      *             *       *             *       *  |
+  0.4 |*+            *      *             *       *             *       *+-|
+      |*            *        *            *        *           *        *  |
+  0.2 |*+           *        *            *        *           *        *+-|
+      | *          *          *          *         *          *          * |
+    0 |-*          *          *          *         *          *          *-|
+      |  *         *          *         *           *         *           *|
+ -0.2 |-+*         *          *         *           *         *          +*|
+      |  *        *            *       *             *       *            *|
+ -0.4 |-+*        *            *       *             *       *           +*|
+      |   *      *              *      *             *      *              |
+ -0.6 |-+ *     *               *     *              *      *            +-|
+      |    *    *               *     *               *     *              |
+ -0.8 |-+   *   *                *   *                 *   *             +-|
+      |     *  *       +         **  *   +             *  *                |
+   -1 +--------------------------------------------------------------------+
+     -10              -5                 0                5                10
+
+gnuplot>
+~/downloads/test took 25s ❯ touch file{1..20}
+~/downloads/test ❯ ls
+file1  file3  file5  file7  file9   file11  file13  file15  file17  file19  session.log
+file2  file4  file6  file8  file10  file12  file14  file16  file18  file20
+~/downloads/test ❯ rm file1*
+~/downloads/test ❯ ls
+file2  file4  file6  file8  file20
+file3  file5  file7  file9  session.log
+~/downloads/test ❯ rm file*
+~/downloads/test ❯ ls
+session.log
+~/downloads/test ❯ ps
+    PID TTY          TIME CMD
+  18389 pts/2    00:00:00 zsh
+  19135 pts/2    00:00:00 ps
+~/downloads/test ❯ ps
+    PID TTY          TIME CMD
+  18389 pts/2    00:00:00 zsh
+  19166 pts/2    00:00:00 ps
+~/downloads/test ❯ ps -a
+    PID TTY          TIME CMD
+  18050 pts/0    00:00:00 foot
+  18230 pts/1    00:00:00 zsh
+  18388 pts/1    00:00:00 script
+  19199 pts/2    00:00:00 ps
+~/downloads/test ❯ ps -a | grep zsh
+  18230 pts/1    00:00:00 zsh
+~/downloads/test ❯ who
+jenya    tty1         2025-09-16 21:54
+~/downloads/test ❯ date
+Вт 16 сен 2025 22:17:55 MSK
+~/downloads/test ❯ pwd
+/home/jenya/downloads/test
+~/downloads/test ❯ ls
+session.log
+~/downloads/test ❯ exit
+Script done.

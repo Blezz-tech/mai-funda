@@ -108,33 +108,33 @@
   scenario: [
     main.tu (черновик программы):
 
-    #console("/lr/9/src/main.c")
+    #console("/lr/5/protos/proto1.tu")
 
     *Описание тестов* (проверка тестов происходит в конце протокола):
 
     Тест 1
 
-    #console("/lr/9/tests/descriptions/1.txt")
+    #console("/lr/5/tests/descriptions/1.txt")
 
     Тест 2
 
-    #console("/lr/9/tests/descriptions/2.txt")
+    #console("/lr/5/tests/descriptions/2.txt")
 
     Тест 3
 
-    #console("/lr/9/tests/descriptions/3.txt")
+    #console("/lr/5/tests/descriptions/3.txt")
 
     Тест 4
 
-    #console("/lr/9/tests/descriptions/4.txt")
+    #console("/lr/5/tests/descriptions/4.txt")
 
     Тест 5
 
-    #console("/lr/9/tests/descriptions/5.txt")
+    #console("/lr/5/tests/descriptions/5.txt")
 
     Тест 6
 
-    #console("/lr/9/tests/descriptions/6.txt")
+    #console("/lr/5/tests/descriptions/6.txt")
   ],
   protocol: [
 

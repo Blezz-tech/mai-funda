@@ -1,0 +1,16 @@
+name: fonts-probe
+on:
+  push:
+    branches: [arena/adb26c73-mai-funda]
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/build-reports
+      - name: Показать выбранные Typst шрифты
+        run: |
+          typst fonts | grep -E "Times New Roman|Hack|Liberation" || true
+          ls dist

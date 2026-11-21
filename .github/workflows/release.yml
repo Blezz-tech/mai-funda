@@ -32,50 +32,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Проверить отчёты
+        run: .github/scripts/check-reports.sh
+
       - name: Typst + шрифты + сборка
         uses: ./.github/actions/build-reports
 
       - name: Собрать архив и имена ассетов
-        run: |
-          set -euo pipefail
-          # Единственное место, где имена «Лабораторная работа N.pdf» доживают
-          # до скачивания: GitHub переименовывает ассеты релиза в ASCII.
-          python3 - <<'PY'
-          import pathlib, re, zipfile
-
-          dist = pathlib.Path("dist")
-          pdfs = sorted(dist.glob("*.pdf"))
-          if not pdfs:
-              raise SystemExit("dist/*.pdf пуст — нечего упаковывать")
-
-          with zipfile.ZipFile("lab-reports.zip", "w", zipfile.ZIP_DEFLATED) as zf:
-              for pdf in pdfs:
-                  zf.write(pdf, arcname=pdf.name)
-          print("В архиве:", ", ".join(p.name for p in pdfs))
-
-          # lab-<номер>.pdf: ASCII-имя для ассета + кириллическая подпись.
-          # Номер берём из имени — ровно тот, что посчитал build.sh.
-          assets = pathlib.Path("release-assets")
-          assets.mkdir(exist_ok=True)
-          seen = {}
-          lines = []
-          for pdf in pdfs:
-              match = re.search(r"\d+", pdf.stem)
-              if not match:
-                  raise SystemExit(f"в имени {pdf.name} нет номера работы")
-              num = match.group(0)
-              if num in seen:
-                  raise SystemExit(
-                      f"номер {num} встречается дважды: {seen[num]} и {pdf.name}"
-                  )
-              seen[num] = pdf.name
-              copy = assets / f"lab-{num}.pdf"
-              copy.write_bytes(pdf.read_bytes())
-              lines.append(f"{copy}#{pdf.stem}")
-
-          pathlib.Path("release-assets/list.txt").write_text("\n".join(lines) + "\n")
-          print("\n".join(lines))
-          PY
+        run: python3 .github/scripts/release-assets.py
 
       - name: Опубликовать релиз
         env:

@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       # Опечатки в путях и номерах ловятся за секунду, до установки
       # Typst и шрифтов (полная установка занимает пару минут).
@@ -35,7 +35,7 @@ jobs:
         uses: ./.github/actions/build-reports
 
       - name: Загрузить PDF как артефакт
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: laboratornye-raboty
           path: dist/*.pdf

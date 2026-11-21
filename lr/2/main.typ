@@ -45,32 +45,84 @@
   scenario: [
     main.c:
 
-    #console("/lr/2/src/main.c")
+    #console("/lr/2/src/main.c", lang: "c")
 
     Makefile:
 
-    #console("/lr/2/src/Makefile")
+    #console("/lr/2/src/Makefile", lang: "makefile")
 
     *Описание тестов* (проверка тестов происходит в конце протокола):
 
-    #console("/lr/2/src/tests.txt")
+    Тест 1
+
+    #console("/lr/2/tests/descriptions/1.txt")
+
+    Тест 2
+
+    #console("/lr/2/tests/descriptions/2.txt")
+
+    Тест 3
+
+    #console("/lr/2/tests/descriptions/3.txt")
+
+    Тест 4
+
+    #console("/lr/2/tests/descriptions/4.txt")
+
+    Тест 5
+
+    #console("/lr/2/tests/descriptions/5.txt")
+
+    Тест 6
+
+    #console("/lr/2/tests/descriptions/6.txt")
+
+    Тест 7
+
+    #console("/lr/2/tests/descriptions/7.txt")
   ],
   protocol: [
     *1. Синтаксическая ошибка*
 
-    #console("/lr/2/src/proto1.txt")
+    #console("/lr/2/protos/proto1.txt")
 
     *2. Правильная работа программы*
 
-    #console("/lr/2/src/proto2.txt")
+    #console("/lr/2/protos/proto2.txt")
 
     *3. Ошибка во время выполнения (неверный ответ, деление на ноль)*
 
-    #console("/lr/2/src/proto3.txt")
+    #console("/lr/2/protos/proto3.txt")
 
     *4. Результаты тестирования*
 
-    #console("/lr/2/src/tests.txt")
+    Тест 1
+
+    #console("/lr/2/tests/results/1.txt")
+
+    Тест 2
+
+    #console("/lr/2/tests/results/2.txt")
+
+    Тест 3
+
+    #console("/lr/2/tests/results/3.txt")
+
+    Тест 4
+
+    #console("/lr/2/tests/results/4.txt")
+
+    Тест 5
+
+    #console("/lr/2/tests/results/5.txt")
+
+    Тест 6
+
+    #console("/lr/2/tests/results/6.txt")
+
+    Тест 7
+
+    #console("/lr/2/tests/results/7.txt")
   ],
   diary-rows: (
     ("1", "дом.", "14.10.2025", "21:20–22:15", "Выполнение работы", "Нет", "Нет"),

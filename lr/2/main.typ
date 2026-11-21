@@ -68,7 +68,7 @@
 
     #console("/lr/2/src/proto3.txt")
 
-    *4. Тесты*
+    *4. Результаты тестирования*
 
     #console("/lr/2/src/tests.txt")
   ],

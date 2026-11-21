@@ -1,9 +1,9 @@
-#import "/lib/template.typ": *
+#import "/lib/lab.typ": setup, report, console
 
 #show: setup.with()
 
 #report(
-  cover: "lab",
+  number: "1",
   topic: [Операционная среда OC UNIX.],
   goal: [
     изучение и освоение программного обеспечения ОС UNIX и приобретение
@@ -14,11 +14,9 @@
     (вариант № 1) Прочитать текст, изучить и выполнить команды ОС UNIX.
   ],
   idea: [
-    #v(0.3em)
-    #listing("/lr/1/src/commands.txt")
+    #console("/lr/1/src/commands.txt")
   ],
   scenario: [
-    #v(0.25em)
     #enum(
       numbering: "1.",
       indent: 1.4em,
@@ -44,20 +42,24 @@
       [Завершить сеанс работы.],
     )
   ],
-  protocol-body: [
-    #v(0.2em)
+  protocol: [
     *Сессия 1.*
 
-    #protocol("/lr/1/src/session1.txt", images: (
-      "1": ("/lr/1/img/plot2d.png", "Рисунок 1 — 2D-график sin(x)·cos(x) в gnuplot"),
-      "2": ("/lr/1/img/plot_param.png", "Рисунок 2 — параметрический график sin(t), cos(t)"),
-      "3": ("/lr/1/img/plot2d.png", "Рисунок 3 — окно gnuplot при включении parametric"),
-    ), width: 78%)
+    #console("/lr/1/src/session1.txt")
 
-    #v(0.6em)
+    #figure(
+      image("/lr/1/img/plot2d.png", width: 78%),
+      caption: [Рисунок 1 — 2D-график sin(x)·cos(x) в gnuplot],
+    )
+
+    #figure(
+      image("/lr/1/img/plot_param.png", width: 78%),
+      caption: [Рисунок 2 — параметрический график sin(t), cos(t)],
+    )
+
     *Сессия 2.*
 
-    #protocol("/lr/1/src/session2.txt", images: (), width: 78%)
+    #console("/lr/1/src/session2.txt")
   ],
   diary-rows: (
     ("1", "дом.", "16.09.2025", "20:00", "Выполнение работы", "Нет", "Нет"),
@@ -76,7 +78,7 @@
        Добавление команд с их описанием],
       [Нет]),
   ),
-  conclusion-body: [
+  conclusion: [
     Был прочитан файл задания. Были изучены команды и применены на примере.
     Лабораторная работа выполнена.
   ],

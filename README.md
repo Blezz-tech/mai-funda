@@ -10,14 +10,56 @@
 ## Сборка
 
 ```bash
-./build.sh                  # собрать обе -> dist/lr_1.pdf, dist/lr_2.pdf
+./build.sh                  # собрать всё -> dist/Лабораторная работа 1.pdf, …
 ( cd lr/1 && typst compile --root .. main.typ out.pdf )   # по одной работе
 ```
+
+`build.sh` находит все `**/main.typ`, берёт номер работы из самого файла
+(`#report(number: "1")`, у ЛР 2 там `"2 (8)"` — номером считается первое
+число) и кладёт результат в `dist/Лабораторная работа <номер>.pdf`.
+Дубли номеров и отсутствие `number:` — ошибка сборки, а не тихо
+перезаписанный файл. Сводка по сборке печатается в консоль и в
+`dist/summary.md`.
 
 Нужен только `typst` (0.13+; проверено на 0.15.x). Если CLI нет в PATH,
 установите его (`cargo install typst-cli`) или используйте Python-пакет
 `typst` (`pip install --user typst`, `typst.compile(...)`).
 `--root ..` обязателен, потому что шаблон лежит на уровень выше.
+
+## CI/CD (GitHub Actions)
+
+Тот же `./build.sh` запускается в GitHub Actions — локальная и серверная
+сборки не расходятся. Всё бесплатно: репозиторий публичный (Actions для
+публичных репозиториев без лимита минут), используются только официальные
+`actions/*` и системные утилиты, никаких платных сервисов.
+
+| Файл | Когда срабатывает | Что делает |
+|---|---|---|
+| `.github/workflows/ci.yml` | каждый push в `main`/`master`/`dev`, каждый PR, вручную | собирает PDF, складывает их в артефакт `laboratornye-raboty`, пишет таблицу в Summary |
+| `.github/workflows/release.yml` | push тега `v*` | обычный релиз (Latest) с вложенными PDF |
+| | push в `main`/`master` | релиз-сборка на этот коммит: тег `build-ГГГГММДД-ЧЧММ-<sha>`, prerelease (Latest не переключается) |
+| `.github/actions/build-reports/action.yml` | — | общий шаг: Typst нужной версии + шрифты + `./build.sh` |
+
+В релиз попадают файлы с теми же именами, что и в `dist/`:
+`Лабораторная работа 1.pdf`, `Лабораторная работа 2.pdf`, … (плюс
+`summary.md` в теле релиза-сборки).
+
+Ручной релиз:
+
+```bash
+git tag v1.0 && git push origin v1.0     # -> GitHub Release v1.0 с PDF
+```
+
+Что где настраивается:
+
+* версия Typst — `inputs.typst-version` в `.github/actions/build-reports/action.yml`
+  (сейчас `v0.15.1`, качается официальный статический бинарник);
+* шрифты — там же: `fonts-liberation` (Liberation Serif/Mono — метрические
+  аналоги Times New Roman из `lib/lab.typ`) и `fonts-hack` для консоли;
+  если семейства нет, шаг печатает warning, сборка не падает;
+* релизы на каждый коммит в основную ветку — это работа `release` в
+  `release.yml`; не нужны — уберите `branches:` из триггера `push`, и
+  релизы будут только по тегам.
 
 ## Структура
 

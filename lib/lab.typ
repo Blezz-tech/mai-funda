@@ -82,7 +82,7 @@
 // ------------------------------------------------------------
 #let console(path, size: 8pt) = {
   let p = if path.starts-with("/") { path } else { "/" + path }
-  let content = read(p).replace("\t", "    ")
+  let content = read(path).replace("\t", "    ")
   block(
     width: 100%,
     fill: rgb("#f2f2f2"),

@@ -68,17 +68,21 @@ jobs:
             exit 1
           fi
 
-          # Отдельные PDF + архив, где имена файлов ровно «Лабораторная работа N.pdf».
-          assets=()
+          # GitHub переписывает имена ассетов релиза в ASCII
+          # («Лабораторная работа 1.pdf» -> «1.pdf»), поэтому:
+          #   * архив lab-reports.zip — имена внутри ровно как в dist/;
+          #   * lab-N.pdf — те же PDF отдельными файлами с ASCII-именами
+          #     и кириллической подписью ассета.
+          assets=(lab-reports.zip)
+          mkdir -p release-assets
           for pdf in "${files[@]}"; do
             name="$(basename "$pdf" .pdf)"
-            slug="$(printf '%s' "${name#Лабораторная работа }" | tr -c '0-9a-zA-Z' '-')"
-            # gh: «файл#метка» — метка это отображаемое имя ассета.
-            assets+=("${pdf}#${name}")
-            cp "$pdf" "dist/lab-${slug}.pdf"
-            assets+=("dist/lab-${slug}.pdf")
+            num="${name#Лабораторная работа }"
+            num="$(printf '%s' "$num" | tr -cd '0-9a-zA-Z')"
+            copy="release-assets/lab-${num}.pdf"
+            cp "$pdf" "$copy"
+            assets+=("${copy}#${name}")
           done
-          assets+=("lab-reports.zip")
 
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             # Релиз по тегу: v1.0.0 -> Latest

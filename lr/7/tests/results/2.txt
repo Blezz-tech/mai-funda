@@ -1,13 +1,4 @@
-lr/7/src on  dev [$!] ❯ ./sdnam ./main.nam -p
-1<01
-<^s01
-<^a1
-<^1a
-<^10
-<10
-10
-
-========================================================
-
-10
-lr/7/src on  dev [$!] ❯ 
+lr/7/src on  dev [$] took 16s ❯ ./sdnam ./main.nam   
+1<10
+00
+lr/7/src on  dev [$] took 2s ❯ 

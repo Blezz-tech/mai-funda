@@ -1,0 +1,4 @@
+lr/7/src on  dev [$!] ❯ ./sdnam ./main.nam
+000101<000101
+100000
+lr/7/src on  dev [$!] ❯ 

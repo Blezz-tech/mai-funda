@@ -1,45 +1,54 @@
-/* Лабораторная работа 2.
+/* Лабораторная работа 9. Задание № 16
 * Студент гр. М8О-113БВ-25 Маркусь Е.О. */
 
-#include <stdio.h>
-#include <math.h>
+#include "stdio.h"
+#include "stdlib.h"
 
-int main () {
-    int a, b, c;
+int max(int a, int b);
+int min(int a, int b);
 
-    printf("Программа нахождения корней квадратного уравнения\n");
-    while (1) {
-        printf("Введите коэффициенты a, b, c через пробелы: ");
-        int count = scanf("%d %d %d", &a, &b, &c);
+// Вычисление предиката делимости на 3 десятичного числа
+int main() {
+    const int i0 = -30;
+    const int j0 = -4;
+    const int l0 = 12;
 
-        if (count == 3) {
+    int i = i0;
+    int j = j0;
+    int l = l0;
+    int k = 0;
+    while (k <= 50) {
+        if ((j <= -i - 10) && (j >= -i - 20)) {
             break;
-        } else {
-            printf("Некорректный ввод. Пожалуйста, введите три целых числа.\n");
-            int ch;
-            while ((ch = getchar()) != '\n' && ch != EOF);
         }
+        int ik = abs(i - l) + min(j % 10, (l*k) % 10) - 20;
+        int jk = max(k - i, min(j, max(i - l, j - l))) % 30;
+        int lk = ((l*l) % 20) - (max(i, j) % (k + 1));
+        i = ik;
+        j = jk;
+        l = lk;
+        k += 1;
     }
-    printf("Введённые коэффициенты a:%d b:%d c:%d\n", a, b, c);
-
-    if (a == 0 && b == 0 && c == 0) {
-        printf("Бесконечное количество корней\n");
-    } else if (a == 0 && b == 0 && c != 0) {
-            printf("Корней уравнения нет\n");
-    } else if (a == 0 && b != 0) {
-        printf("Корень уравнения: %f\n", -(double)c / b);
+    if (k <= 50) {
+        printf("Точка попала в область. Количество итераций: %d\n", k);
     } else {
-        int D = b * b - 4 * a * c;
-        if (D < 0) {
-            printf("Корней уравнения нет\n");
-        } else if (D == 0) {
-            printf("Корень уравнения: %f\n", -b / (2.0 * a));
-        } else {
-            float x1 = (-b + sqrt(D)) / (2 * a);
-            float x2 = (-b - sqrt(D)) / (2 * a);
-            printf("Корни уравнения x1: %f x2: %f\n", x1, x2);
-        }
+        printf("Точка не попала в область за 50 итераций.\n");
+        printf("Количество итераций: %d\n", k);
+        printf("i = %d, j = %d, k = %d\n", i, j, k);
     }
-
     return 0;
+}
+
+int max(int a, int b) {
+    if (a > b) {
+        return a;
+    }
+    return b;
+}
+
+int min(int a, int b) {
+    if (a < b) {
+        return a;
+    }
+    return b;
 }

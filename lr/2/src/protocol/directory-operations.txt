@@ -1,0 +1,39 @@
+~/downloads/test ❯ mkdir lab course
+~/downloads/test ❯ ls
+course  f1.txt  lab  session.log
+~/downloads/test ❯ cp f1.txt lab/f1.txt
+~/downloads/test ❯ cp f1.txt course
+~/downloads/test ❯ ls course
+f1.txt
+~/downloads/test ❯ ls lab
+f1.txt
+~/downloads/test ❯ rm f1.txt
+~/downloads/test ❯ cat course/f1.txt
+123
+456
+
+~/downloads/test ❯ cat lab/f1.txt
+123
+456
+
+~/downloads/test ❯ ls
+course  lab  session.log
+~/downloads/test ❯ cd course
+downloads/test/course ❯ ls
+f1.txt
+downloads/test/course ❯ cd ..
+~/downloads/test ❯ rm course
+rm: невозможно удалить 'course': Is a directory
+~/downloads/test ❯ rm -r course
+~/downloads/test ❯ cd lab
+downloads/test/lab ❯ ls
+f1.txt
+downloads/test/lab ❯ rm f1.txt
+downloads/test/lab ❯ cd ..
+~/downloads/test ❯ rm lab
+rm: невозможно удалить 'lab': Is a directory
+~/downloads/test ❯ rm lab -r
+~/downloads/test ❯ "Нужен флаг -r"
+zsh: command not found: Нужен флаг -r
+~/downloads/test ❯ ls
+session.log

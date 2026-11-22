@@ -1,0 +1,17 @@
+gnuplot> set parametric
+
+	dummy variable is t for curves, u/v for surfaces
+gnuplot> set trange [0 to 2*pi]
+gnuplot> set xrange [-1 to 1]
+gnuplot> set yrange [-1 to 1]
+gnuplot> plot sin(t),cos(t)
+gnuplot> plot sin(t),cos(t)
+gnuplot> set zrange [-1 to 1]
+gnuplot> set urange [0 to 2*pi]
+gnuplot> set vrange [0 to 2*pi]
+gnuplot> set nohidden3d
+             ^
+         warning: deprecated syntax, use "unset"
+gnuplot> unset hidden3d
+gnuplot> splot sin(u)*sin(v),sin(u)*cos(v),cos(u)
+gnuplot>

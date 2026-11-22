@@ -1,0 +1,35 @@
+~/downloads/test ❯ cd
+~ ❯ ls
+Documents  games      media          nixpkgs
+downloads  git-repos  nixos-pc-conf  'Библиотека calibre'
+~ ❯ ls -a
+.bash_history  .icons        .parsec-persistent  .var          games
+.cache         .java         .pki                .vscode       git-repos
+.config        .local        .pulse-cookie       .zcompdump    media
+.cursor        .minecraft    .renpy              .zoom         nixos-pc-conf
+.dotnet        .mono         .ssh                .zsh_history  nixpkgs
+.ftb           .mozilla      .steam              .zshenv       'Библиотека calibre'
+.ftba          .nix-defexpr  .steampath          .zshrc
+.gnupg         .nix-profile  .steampid           Documents
+.gtkrc-2.0     .parsec       '.tor project'      downloads
+~ ❯ cd downloads/test
+~/downloads/test ❯ ls -l
+.rw-r--r-- 0 jenya 22 ноя 01:12 session.log
+~/downloads/test ❯ who
+jenya    tty1         2026-11-22 01:12
+~/downloads/test ❯ whoami
+jenya
+~/downloads/test ❯ w
+ 01:13:34 up 9 min,  1 user,  load average: 0,42, 0,65, 0,41
+USER     TTY       LOGIN@   IDLE   JCPU   PCPU  WHAT
+jenya    tty1      01:04    9:32   0.03s  0.03s /nix/store/6g426l79z8iss69ajdr3f16dlh33bs9y-plasma-
+~/downloads/test ❯ tty
+/dev/pts/3
+~/downloads/test ❯ hostname
+nixos-jenya
+~/downloads/test ❯ uname -a
+Linux nixos-jenya 7.3.4 #1-NixOS SMP PREEMPT_DYNAMIC @1794334210 x86_64 GNU/Linux
+~/downloads/test ❯ pwd
+/home/jenya/downloads/test
+~/downloads/test ❯ who
+jenya    tty1         2026-11-22 01:12

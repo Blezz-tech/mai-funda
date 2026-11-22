@@ -1,0 +1,11 @@
+~/downloads/test took 25s ❯ touch file{1..20}
+~/downloads/test ❯ ls
+file1  file3  file5  file7  file9   file11  file13  file15  file17  file19  session.log
+file2  file4  file6  file8  file10  file12  file14  file16  file18  file20
+~/downloads/test ❯ rm file1*
+~/downloads/test ❯ ls
+file2  file4  file6  file8  file20
+file3  file5  file7  file9  session.log
+~/downloads/test ❯ rm file*
+~/downloads/test ❯ ls
+session.log

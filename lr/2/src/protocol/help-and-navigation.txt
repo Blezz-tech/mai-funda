@@ -1,0 +1,15 @@
+~/downloads/test ❯ man man
+~/downloads/test ❯ man ls
+~/downloads/test ❯ cd /
+/# ❯ ls
+bin   dev  home  lib64       nix  proc  run  sys  usr
+boot  etc  lib   lost+found  opt  root  srv  tmp  var
+/# ❯ cd /bin
+/bin# ❯ ls
+sh
+/bin# ❯ cd
+~ ❯ cd ..
+/home# ❯ ls
+jenya
+/home# ❯ cd
+~ ❯ cd downloads/test

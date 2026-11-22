@@ -1,0 +1,14 @@
+~/downloads/test ❯ touch test.txt
+~/downloads/test ❯ cat > test.txt << EOF
+∙ E O F best wirte text
+∙
+∙ NEED MORE TEXTS
+∙
+∙ EOF
+~/downloads/test ❯ ls
+test.txt
+~/downloads/test ❯ cat test.txt
+E O F best wirte text
+
+NEED MORE TEXTS
+

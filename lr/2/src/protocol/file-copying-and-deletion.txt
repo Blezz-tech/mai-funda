@@ -1,0 +1,15 @@
+~/downloads/test ❯ cp f1.txt f{2..3}.txt
+cp: цель 'f3.txt': No such file or directory
+~/downloads/test ❯ cp f1.txt f2.txt
+~/downloads/test ❯ cp f1.txt f3.txt
+~/downloads/test ❯ ls
+f1.txt  f2.txt  f3.txt  session.log
+~/downloads/test ❯ cat f2.txt
+123
+456
+
+~/downloads/test ❯ cat f3.txt
+123
+456
+
+~/downloads/test ❯ rm f2.txt f3.txt

@@ -1,0 +1,8 @@
+gnuplot> set parametric
+
+	dummy variable is t for curves, u/v for surfaces
+gnuplot> set trange [0 to 2*pi]
+gnuplot> set xrange [-1 to 1]
+gnuplot> set yrange [-1 to 1]
+gnuplot> plot sin(t),cos(t)
+gnuplot>

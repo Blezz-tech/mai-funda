@@ -1,0 +1,15 @@
+~/downloads/test ❯ bc
+bc 1.08.2
+Copyright 1991-1994, 1997, 1998, 2000, 2004, 2006, 2008, 2012-2018, 2024 Free Software Foundation, Inc.
+This is free software with ABSOLUTELY NO WARRANTY.
+For details type `warranty'.
+obase=10; ibase=16; 128
+296
+obase=2; ibase=10; 128
+100101000
+obase=8; ibase=10; 128
+450
+obase=10; ibase=10; 128
+128
+obase=16; ibase=10; 128
+ 13 10

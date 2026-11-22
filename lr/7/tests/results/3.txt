@@ -1,0 +1,4 @@
+lr/7/src on  dev [$!] ❯ ./sdnam ./main.nam
+10<01
+00
+lr/7/src on  dev [$!] took 3s ❯ 

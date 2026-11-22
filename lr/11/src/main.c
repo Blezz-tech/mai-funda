@@ -1,60 +1,98 @@
 /* Лабораторная работа 11. Задание № 33
 * Студент гр. М8О-113БВ-25 Маркусь Е.О. */
 
+/*
+Алгоритм программы
 
+Читать входной текст посимвольно, разбивая его на слова по разделителям.
 
+Для каждого слова проверять, является ли оно восьмеричным числом. Допускать один знак + или - только в начале слова; после него должна быть хотя бы одна цифра.
 
-// 33. Выделить все восьмеричные числа от 17 до 77 по модулю и распечатать их значения B словесной форме по-английски.
+По мере чтения цифр накапливать модуль числа по формуле:
 
-#include "stdio.h"
-#include "stdlib.h"
+новое значение = предыдущее значение × 8 + текущая цифра.
 
-int max(int a, int b);
-int min(int a, int b);
-// int abs(int a);
+Если встретился недопустимый символ или значение превысило 077, пропускать остаток слова.
 
-// Вычисление предиката делимости на 3 десятичного числа
-int main() {
-    const int i0 = -30;
-    const int j0 = -4;
-    const int l0 = 12;
+На границе слова, если число допустимо и его модуль не меньше 017, выводить его значение словами на английском языке.
 
-    int i = i0;
-    int j = j0;
-    int l = l0;
-    int k = 0;
-    while (k <= 50) {
-        if ((j <= -i - 10) && (j >= -i - 20)) {
-            break;
-        }
-        int ik = abs(i - l) + min(j % 10, (l*k) % 10) - 20;
-        int jk = max(k - i, min(j, max(i - l, j - l))) % 30;
-        int lk = ((l*l) % 20) - (max(i, j) % (k + 1));
-        i = ik;
-        j = jk;
-        l = lk;
-        k += 1;
-    }
-    if (k <= 50) {
-        printf("Точка попала в область. Количество итераций: %d\n", k);
+Продолжать обработку до конца файла. Последнее слово обработать и в том случае, если после него нет разделителя.
+*/
+
+#include <stdio.h>
+
+enum State {
+    START,
+    NUMBER,
+    BAD
+};
+
+int is_separator(int c)
+{
+    return c == ' ' || c == ',' || c == '\t' || c == '\n' || c == '\r';
+}
+
+void print_english(int n)
+{
+    const char* ones[] = {
+        "zero", "one", "two", "three", "four",
+        "five", "six", "seven", "eight", "nine",
+        "ten", "eleven", "twelve", "thirteen", "fourteen",
+        "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
+    };
+
+    const char* tens[] = {
+        "", "", "twenty", "thirty", "forty",
+        "fifty", "sixty", "seventy", "eighty", "ninety"
+    };
+
+    if (n < 20) {
+        printf("%s\n", ones[n]);
+    } else if (n % 10 == 0) {
+        printf("%s\n", tens[n / 10]);
     } else {
-        printf("Точка не попала в область за 50 итераций.\n");
-        printf("Количество итераций: %d\n", k);
-        printf("i = %d, j = %d, k = %d\n", i, j, k);
+        printf("%s %s\n", tens[n / 10], ones[n % 10]);
     }
+}
+
+int main(void)
+{
+    const int lower = 017;
+    const int upper = 077;
+
+    enum State state = START;
+    int value = 0;
+    int sign_allowed = 1;
+    int c;
+
+    for (;;) {
+        c = getchar();
+
+        if (c == EOF || is_separator(c)) {
+            if (state == NUMBER && value >= lower) {
+                print_english(value);
+            }
+
+            if (c == EOF) { break; }
+            state = START;
+            value = 0;
+            sign_allowed = 1;
+        } else if (state != BAD) {
+            if (state == START && sign_allowed && (c == '+' || c == '-')) {
+                sign_allowed = 0;
+            } else if (c >= '0' && c <= '7') {
+                value = value * 8 + (c - '0');
+                state = NUMBER;
+                sign_allowed = 0;
+
+                if (value > upper) {
+                    state = BAD;
+                }
+            } else {
+                state = BAD;
+            }
+        }
+    }
+
     return 0;
-}
-
-int max(int a, int b) {
-    if (a > b) {
-        return a;
-    }
-    return b;
-}
-
-int min(int a, int b) {
-    if (a < b) {
-        return a;
-    }
-    return b;
 }

@@ -29,7 +29,7 @@
 #let doc-meta = (
   student: "Маркусь Евгений Олегович",
   teacher: box[#highlight[каф. 806 Никулин Сергей Петрович]],
-  group: "М8О-113БВ-25",
+  group: "М8О-113БВ-26",
   list-no: "17",
   contacts: "markus.jenya04@yandex.ru",
 );

@@ -16,39 +16,43 @@ int is_separator(int c)
 }
 
 
-
-
 int main(void)
 {
-    const int lower = 017;
-    const int upper = 077;
-
     enum State state = START;
-    int value = 0;
+    int prev1 = 0;
+    int prev2 = 0;
     int sign_allowed = 1;
     int c;
+    int count = 0;
 
     for (;;) {
         c = getchar();
-
         if (c == EOF || is_separator(c)) {
-            if (state == NUMBER && value >= lower) {
-            }
-
             if (c == EOF) { break; }
             state = START;
-            value = 0;
             sign_allowed = 1;
+            count = 0;
         } else if (state != BAD) {
             if (state == START && sign_allowed && (c == '+' || c == '-')) {
                 sign_allowed = 0;
-            } else if (c >= '0' && c <= '7') {
-                value = value * 8 + (c - '0');
+            } else if (c >= '0' && c <= '9') {
                 state = NUMBER;
                 sign_allowed = 0;
 
-                if (value > upper) {
-                    state = BAD;
+                switch (count) {
+                    case 0:
+                        prev1 = c;
+                        break;
+                    case 1:
+                        prev2 = c;
+                        break;
+                    case 2:
+                        if (c == (prev1 + prev2)) {
+                            printf(prev2);
+                        }
+                        prev1 = prev2;
+                        prev2 = c;
+                        break;
                 }
             } else {
                 state = BAD;

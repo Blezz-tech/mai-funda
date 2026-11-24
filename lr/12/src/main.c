@@ -3,60 +3,32 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 
-enum State {
-    START,
-    NUMBER,
-    BAD
-};
+int main() {
+    int x;
+    int res;
 
-int is_separator(int c)
-{
-    return c == ' ' || c == ',' || c == '\t' || c == '\n' || c == '\r';
-}
+    while ((res = scanf("%d", &x)) != EOF) {
+        if (res == 1) {
+            unsigned int n = abs(x);
+            unsigned int count = 0;
 
-
-int main(void)
-{
-    enum State state = START;
-    int prev1 = 0;
-    int prev2 = 0;
-    int sign_allowed = 1;
-    int c;
-    int count = 0;
-
-    for (;;) {
-        c = getchar();
-        if (c == EOF || is_separator(c)) {
-            if (c == EOF) { break; }
-            state = START;
-            sign_allowed = 1;
-            count = 0;
-        } else if (state != BAD) {
-            if (state == START && sign_allowed && (c == '+' || c == '-')) {
-                sign_allowed = 0;
-            } else if (c >= '0' && c <= '9') {
-                state = NUMBER;
-                sign_allowed = 0;
-
-                switch (count) {
-                    case 0:
-                        prev1 = c;
-                        break;
-                    case 1:
-                        prev2 = c;
-                        break;
-                    case 2:
-                        if (c == (prev1 + prev2)) {
-                            printf(prev2);
-                        }
-                        prev1 = prev2;
-                        prev2 = c;
-                        break;
+            while (n > 99) {
+                unsigned int prev2 = n % 10;
+                unsigned int prev1 = (n / 10) % 10;
+                unsigned int curr = (n / 100) % 10;
+                if (curr == prev1 + prev2) {
+                    printf("%d ", curr);
+                    count += 1;
                 }
-            } else {
-                state = BAD;
+                n /= 10;
             }
+            if (count > 0) {
+                printf("\n");
+            }
+        } else {
+            getchar(); 
         }
     }
 

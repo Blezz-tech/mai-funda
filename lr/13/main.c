@@ -4,7 +4,6 @@
 /* Есть ли слово, содержащее более одной прописной буквы? */
 
 #include "stdio.h"
-#include "stdint.h"
 
 int is_sepraator(int c) {
     return c == ' ' || c == '\n' || c == '\r' || c == '\t';
@@ -34,7 +33,6 @@ int main() {
         }
         if (count > 1) {
             is_exist = 1;
-            break;
         }
         if(is_sepraator(c)) {
             count = 0;
